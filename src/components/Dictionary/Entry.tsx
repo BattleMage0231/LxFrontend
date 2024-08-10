@@ -10,7 +10,7 @@ type EntryProps = {
 export default function Entry({ data, setData }: EntryProps) {
     const language = useLanguage();
     return (
-        <ul>
+        <li>
             <div>
                 <p>Word: {data.Key}</p>
                 <p>Class: {data.Class}</p>
@@ -24,6 +24,6 @@ export default function Entry({ data, setData }: EntryProps) {
                     setData(data);
                 }}>Update</button>
             </div>
-        </ul>
+        </li>
     );
 }
