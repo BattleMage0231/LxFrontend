@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type SearchBarProps = {
     search: (x: string) => void
-};
+}
 
 export default function SearchBar({ search } : SearchBarProps) {
     const [searchInput, setSearchInput] = useState("");

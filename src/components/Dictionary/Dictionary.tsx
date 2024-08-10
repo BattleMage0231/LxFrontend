@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../../contexts/language-context";
+import FREntryService from "../../services/languages/fr-entry-service";
 import SearchBar from "./SearchBar";
 
 export default function Dictionary() {
@@ -9,10 +10,13 @@ export default function Dictionary() {
     const language = useLanguage();
     const [searchResults, setSearchResults] = useState<string[]>([]);
     useEffect(() => {
-        setSearchResults(performSearch(params.key ?? ""));
+        performSearch(params.key ?? "");
     }, [params]);
-    function performSearch(key: string) {
-        return ["abc", "def", key];
+    async function performSearch(key: string) {
+        const results = await FREntryService.getAllEntries();
+        const str = results!.map(res => JSON.stringify(res));
+        console.log(str);
+        setSearchResults(str);
     }
     const searchResultsRendered = searchResults.map(result => <li>{result}</li>);
     return (

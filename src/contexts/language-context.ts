@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { Language } from "../utilites/languages/languages.ts";
+import { Language } from "../utilites/base-entry.ts";
 
 export const LanguageContext = createContext<Language>(Language.FR);
 
