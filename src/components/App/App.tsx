@@ -1,9 +1,11 @@
-import { Routes, Route, Outlet } from 'react-router-dom';
-import Dictionary from '../Dictionary/Dictionary.tsx';
+import { Routes, Route, Outlet } from "react-router-dom";
+import { LanguageContext } from "../../contexts/language-context.ts";
+import Dictionary from "../Dictionary/Dictionary.tsx";
+import { Language } from "../../utilites/languages/languages.ts";
 
 export default function App() {
     return (
-        <>
+        <LanguageContext.Provider value={Language.FR}>
             <Routes>
                 <Route path='/' element={<Layout />}>
                     <Route index element={<Dictionary />}></Route>
@@ -12,7 +14,7 @@ export default function App() {
                     <Route path='test' element={<h1>Test</h1>}></Route>
                 </Route>
             </Routes>
-        </>
+        </LanguageContext.Provider>
     );
 }
 

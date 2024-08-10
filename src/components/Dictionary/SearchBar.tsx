@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 type SearchBarProps = {
-    performSearch: (x: string) => void
+    search: (x: string) => void
 };
 
-export default function SearchBar({ performSearch } : SearchBarProps) {
+export default function SearchBar({ search } : SearchBarProps) {
     const [searchInput, setSearchInput] = useState("");
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault();
@@ -12,7 +12,7 @@ export default function SearchBar({ performSearch } : SearchBarProps) {
     };
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        performSearch(searchInput);
+        search(searchInput);
     }
     return (
         <div>
