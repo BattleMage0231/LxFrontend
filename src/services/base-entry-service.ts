@@ -27,8 +27,8 @@ export abstract class BaseEntryService<T extends BaseEntry> {
         .then((res) => res.data).catch((err) => console.log(err))
     
     updateEntry = async(id: string, entry: T) => this.instance.put(`/${id}`, entry)
-        .then((res) => res.data).catch((err) => console.log(err))
+        .catch((err) => console.log(err))
 
     deleteEntry = async(id: string) => this.instance.delete(`/${id}`)
-        .then((res) => res.data).catch((err) => console.log(err))
+        .catch((err) => console.log(err))
 }
