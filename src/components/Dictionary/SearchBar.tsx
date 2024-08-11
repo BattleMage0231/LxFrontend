@@ -21,7 +21,7 @@ export default function SearchBar({ search } : SearchBarProps) {
                     <input
                         className="block w-full p-4 ps-10 text-sm text-gray-900 border"
                         type="search" 
-                        placeholder="Search" 
+                        placeholder="Search"
                         onChange={handleChange} 
                         value={searchInput} 
                     />

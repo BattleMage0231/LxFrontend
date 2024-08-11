@@ -15,10 +15,14 @@ export default function EntryList({ key }: EntryListProps) {
     useEffect(() => {
         performSearch(key).catch(err => console.log(err));
     }, [key]);
-    function setSearchResult(index: number, newResult: BaseEntry) {
-        setSearchResults(searchResults.map((result, idx) => {
-            return index == idx ? newResult : result;
-        }));
+    function setSearchResult(index: number, newResult: BaseEntry | null) {
+        if(newResult === null) {
+            setSearchResults(searchResults.filter((_, idx) => index != idx));
+        } else {
+            setSearchResults(searchResults.map((result, idx) => {
+                return index == idx ? newResult : result;
+            }));
+        }
     }
     async function performSearch(key: string) {
         console.log(key);
@@ -31,7 +35,7 @@ export default function EntryList({ key }: EntryListProps) {
                 language == Language.FR &&
                 <FREntryCell
                     data={result as FREntry}
-                    setData={(res: FREntry) => setSearchResult(idx, res)}
+                    setData={(res: FREntry | null) => setSearchResult(idx, res)}
                 />
             }
         </div>
@@ -40,7 +44,6 @@ export default function EntryList({ key }: EntryListProps) {
         <div>
             <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             <ul className="list-disc list-inside">{searchResultsRendered}</ul>
-            <p>Child has rerendered? {Math.random()}</p>
         </div>
     );
 }

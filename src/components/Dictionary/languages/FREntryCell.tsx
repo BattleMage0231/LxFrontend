@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { Class } from "../../../utilites/base-entry";
 import { FRAdjectiveEntry, FREntry, FRNounEntry, FRVerbEntry, getFRFormCode, getFRTypeCode } from "../../../utilites/languages/fr-entry";
+import FREntryModal from "./FREntryModal";
 
 type FREntryCellProps = {
     data: FREntry,
-    setData: (res: FREntry) => void
+    setData: (res: FREntry | null) => void
 }
 
 function renderCellHeaderRow(entry: FREntry) {
@@ -80,8 +82,12 @@ function renderOtherBody(entry: FREntry) {
 }
 
 export default function FREntryCell({ data, setData }: FREntryCellProps) {
+    const [isModalShown, setIsModalShown] = useState(false);
     const headerRow = renderCellHeaderRow(data);
     const footerRow = renderCellFooterRow(data);
+    useEffect(() => {
+        document.body.style.overflow = isModalShown ? 'hidden' : 'unset';
+    }, [isModalShown]);
     return (
         <div>
             {headerRow}
@@ -95,10 +101,14 @@ export default function FREntryCell({ data, setData }: FREntryCellProps) {
             <button 
                 type="button" 
                 className="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                onClick={() => {
-                data.Key = "unga bunga";
-                setData(data);
-            }}>Update</button>
+                onClick={() => setIsModalShown(true)}>Edit</button>
+            { isModalShown && 
+                <FREntryModal 
+                    data={data}
+                    close={() => setIsModalShown(false)} 
+                    setData={setData}
+                /> 
+            }
             <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
         </div>
     )

@@ -13,7 +13,6 @@ export default function Dictionary() {
                 />
                 <h2>Results:</h2>
                 <EntryList key={params.key ?? ""} />
-                <p>Parent has rerendered? {Math.random()}</p>
             </div>
         </div>
     );
