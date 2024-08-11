@@ -2,6 +2,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import { LanguageContext } from "../../contexts/language-context.ts";
 import Dictionary from "../Dictionary/Dictionary.tsx";
 import { Language } from "../../utilites/base-entry.ts";
+import Navbar from "./Navbar.tsx";
 
 export default function App() {
     return (
@@ -21,6 +22,7 @@ export default function App() {
 function Layout() {
     return (
         <>
+            <Navbar />
             <h1>Lx</h1>
             <Outlet />
         </>
