@@ -23,7 +23,6 @@ function Layout() {
     return (
         <>
             <Navbar />
-            <h1>Lx</h1>
             <Outlet />
         </>
     );
