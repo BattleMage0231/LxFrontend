@@ -1,4 +1,4 @@
-import { BaseEntry, BaseForm } from "../base-entry";
+import { BaseEntry, BaseForm, Class } from "../base-entry";
 
 export enum FRGender {
     Masculine = "Masculine",
@@ -117,3 +117,50 @@ export type FREntry = FRNounEntry
     | FRPrepositionEntry
     | FRPronounEntry
     | FROtherEntry
+
+export function getFRFormCode(gender?: FRGender, number?: FRNumber) {
+    let typeId = "";
+    if(gender == FRGender.Masculine) {
+        typeId += "m";
+    } else if(gender == FRGender.Feminine) {
+        typeId += "f";
+    }
+    if(number == FRNumber.Plural) {
+        typeId += "pl";
+    }
+    return typeId;
+}
+
+export function getFRTypeCode(entry: FREntry) {
+    switch(entry.Class) {
+        case Class.Noun: {
+            const nounEntry = entry as FRNounEntry;
+            return `n${getFRFormCode(nounEntry.MainGender, nounEntry.MainNumber)}`;
+        }
+        case Class.Verb: {
+            const verbEntry = entry as FRVerbEntry;
+            switch(verbEntry.Transitivity) {
+                case FRVerbTransitivity.Intransitive:
+                    return "vi"
+                case FRVerbTransitivity.Transitive:
+                    return "vtr"
+                default:
+                    return "v"
+            }
+        }
+        case Class.Adjective:
+            return "adj"
+        case Class.Adverb:
+            return "adv"
+        case Class.Preposition:
+            return "prep"
+        case Class.Article:
+            return "article"
+        case Class.Conjunction:
+            return "conj"
+        case Class.Pronoun:
+            return "pron"
+        case Class.Other:
+            return ""
+    }
+}
