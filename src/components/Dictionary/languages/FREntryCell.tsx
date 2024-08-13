@@ -12,7 +12,7 @@ function renderCellHeaderRow(entry: FREntry) {
     const typeId = getFRTypeCode(entry);
     return (
         <div className="flow-root">
-            <h2 className="float-left">{entry.Key} ({typeId})</h2>
+            <h2 className="float-left">{entry.Key} { typeId && <span>{`(${typeId})`}</span>}</h2>
             { entry.Definition && <p className="float-right">{entry.Definition}</p>}
         </div>
     )
@@ -92,10 +92,10 @@ export default function FREntryCell({ data, setData }: FREntryCellProps) {
         <div>
             {headerRow}
             {
-                data.Class == Class.Noun ? <>{renderNounAdjectiveBody(data as FRNounEntry)}</>
-                : data.Class == Class.Verb ? <>{renderVerbBody(data as FRVerbEntry)}</>
-                : data.Class == Class.Adjective ? <>{renderNounAdjectiveBody(data as FRAdjectiveEntry)}</>
-                : <>{renderOtherBody(data)}</>
+                data.Class == Class.Noun ? <>{renderNounAdjectiveBody(data as FRNounEntry)}</> : 
+                data.Class == Class.Verb ? <>{renderVerbBody(data as FRVerbEntry)}</> : 
+                data.Class == Class.Adjective ? <>{renderNounAdjectiveBody(data as FRAdjectiveEntry)}</> :
+                <>{renderOtherBody(data)}</>
             }
             {footerRow}
             <button 

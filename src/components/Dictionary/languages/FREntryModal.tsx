@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { FREntry } from "../../../utilites/languages/fr-entry";
+import { FREntry, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
+import TextInput from "../../common/TextInput";
+import DropdownInput from "../../common/DropdownInput";
+import { Class } from "../../../utilites/base-entry";
 
 type FREntryModalProps = {
     data: FREntry,
@@ -8,29 +11,114 @@ type FREntryModalProps = {
 }
 
 function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry) => void) {
+    function changeClass(newClass: Class) {
+        if(newClass != editedData.Class) {
+            setEditedData({
+                Id: editedData.Id,
+                Class: newClass,
+                Key: editedData.Key,
+                Definition: editedData.Definition,
+                Notes: editedData.Notes,
+                Examples: editedData.Examples,
+                Synonyms: editedData.Synonyms,
+                Forms: []
+            });
+        }
+    }
     return (
-        <>
+        <div id="header-section">
             <div className="mb-6">
-                <label htmlFor="key" className="block mb-2 text-sm font-medium">Key</label>
-                <input 
-                    type="text" 
+                <TextInput 
+                    name="Key"
                     id="key" 
-                    className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    defaultValue={editedData.Key} 
-                    onChange={e => setEditedData({ ...editedData, Key: e.target.value })}
+                    defaultValue = {editedData.Key}
+                    onChange={(e: string) => setEditedData({ ...editedData, Key: e })}
                 />
             </div>
             <div className="mb-6">
-                <label htmlFor="definition" className="block mb-2 text-sm font-medium">Definition</label>
-                <input 
-                    type="text" 
+                <TextInput 
+                    name="Definition"
                     id="definition" 
-                    className="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    defaultValue={editedData.Definition} 
-                    onChange={e => setEditedData({ ...editedData, Definition: e.target.value })}
+                    defaultValue = {editedData.Definition}
+                    onChange={(e: string) => setEditedData({ ...editedData, Definition: e })}
                 />
             </div>
-        </>
+            <div className="mb-6">
+                <TextInput 
+                    name="Notes"
+                    id="notes" 
+                    defaultValue = {editedData.Notes}
+                    onChange={(e: string) => setEditedData({ ...editedData, Notes: e })}
+                />
+            </div>
+            <div className="mb-6">
+                <DropdownInput 
+                    name="Class"
+                    id="class"
+                    choices={Object.keys(Class).map(cls => {
+                        return { displayName: cls, value: cls }
+                    })}
+                    defaultValue = {editedData.Class}
+                    onChange={e => changeClass(e as Class)}
+                />
+            </div>
+        </div>
+    )
+}
+
+function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREntry) => void) {
+    return (
+        <div id="body-section">
+            <div className="mb-6">
+                <DropdownInput 
+                    name="Gender"
+                    id="main-gender"
+                    choices={[{
+                        displayName: "Unspecified",
+                        value: ""
+                    }].concat(Object.keys(FRGender).map(gender => {
+                        return { displayName: gender, value: gender }
+                    }))}
+                    defaultValue = {editedData.MainGender}
+                    onChange={e => setEditedData({ ...editedData, MainGender: e == "" ? undefined : e as FRGender })}
+                />
+            </div>
+            <div className="mb-6">
+                <DropdownInput 
+                    name="Number"
+                    id="main-number"
+                    choices={[{
+                        displayName: "Unspecified",
+                        value: ""
+                    }].concat(Object.keys(FRNumber).map(numb => {
+                        return { displayName: numb, value: numb }
+                    }))}
+                    defaultValue = {editedData.MainNumber ?? ""}
+                    onChange={e => setEditedData({ ...editedData, MainNumber: e == "" ? undefined : e as FRNumber })}
+                />
+            </div>
+        </div>
+    )
+}
+
+function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) => void) {
+    return (
+        <div id="body-section">
+            <div className="mb-6">
+                <DropdownInput 
+                    name="Transitivity"
+                    id="transitivity"
+                    choices={[{
+                        displayName: "Unspecified",
+                        value: ""
+                    }].concat(Object.keys(FRVerbTransitivity).map(trans => {
+                        return { displayName: trans, value: trans }
+                    }))}
+                    defaultValue = {editedData.Transitivity ?? ""}
+                    onChange={e => setEditedData({ ...editedData, Transitivity: e == "" ? undefined : e as FRVerbTransitivity })}
+                />
+            </div>
+        </div>
     )
 }
 
@@ -54,6 +142,11 @@ export default function FREntryModal({ data, setData, close }: FREntryModalProps
                                 <div className="mt-2 text-sm ">
                                     <form>
                                         { renderModalHeaderRow(editedData, setEditedData) }
+                                        { 
+                                            editedData.Class == Class.Noun ? <>{renderModalNounBody(editedData as FRNounEntry, setEditedData)}</> :
+                                            editedData.Class == Class.Verb ? <>{renderModalVerbBody(editedData as FRVerbEntry, setEditedData)}</> :
+                                            <></>
+                                        }
                                     </form>
                                 </div>
                             </div>
