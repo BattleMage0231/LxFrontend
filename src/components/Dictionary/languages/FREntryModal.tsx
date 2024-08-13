@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
+import { FREntry, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
 import { Class } from "../../../utilites/base-entry";
 import TextInput from "../../common/TextInput";
 import DropdownInput from "../../common/DropdownInput";

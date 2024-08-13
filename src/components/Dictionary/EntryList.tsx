@@ -26,7 +26,7 @@ export default function EntryList({ key }: EntryListProps) {
                 return true;
             }));
             if(targetId) {
-                FREntryService.deleteEntry(targetId);
+                FREntryService.deleteEntry(targetId).catch(err => console.log(err));
             }
         } else {
             setSearchResults(searchResults.map((res, idx) => {
@@ -38,7 +38,7 @@ export default function EntryList({ key }: EntryListProps) {
                 }
             }));
             if(targetId) {
-                FREntryService.updateEntry(targetId, newResult as FREntry);
+                FREntryService.updateEntry(targetId, newResult as FREntry).catch(err => console.log(err));
             }
         }
     }
