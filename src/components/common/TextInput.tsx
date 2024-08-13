@@ -1,6 +1,6 @@
 type TextInputProps = {
     id: string,
-    name: string,
+    name?: string,
     defaultValue?: string,
     onChange: (e: string) => void
 };
@@ -8,7 +8,7 @@ type TextInputProps = {
 export default function TextInput({ id, name, defaultValue, onChange }: TextInputProps) {
     return (
         <>
-            <label htmlFor={id} className="block mb-2 text-sm font-medium">{name}</label>
+            { name && <label htmlFor={id} className="block mb-2 text-sm font-medium">{name}</label>}
             <input 
                 type="text" 
                 id={id}

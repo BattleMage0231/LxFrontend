@@ -18,7 +18,7 @@ export default function DropdownInput({ id, choices, name, defaultValue, onChang
         );
     });
     return (
-        <>
+        <div>
             <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900">{name}</label>
             <select 
                 defaultValue={defaultValue ?? choices[0].value}
@@ -29,6 +29,6 @@ export default function DropdownInput({ id, choices, name, defaultValue, onChang
             >
                 {options}
             </select>
-        </>
+        </div>
     );
 }

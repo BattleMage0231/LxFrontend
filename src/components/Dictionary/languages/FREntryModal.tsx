@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { FREntry, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
+import { FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
+import { Class } from "../../../utilites/base-entry";
 import TextInput from "../../common/TextInput";
 import DropdownInput from "../../common/DropdownInput";
-import { Class } from "../../../utilites/base-entry";
+import ExpandWrapper from "../../common/ExpandWrapper";
 
 type FREntryModalProps = {
     data: FREntry,
@@ -69,7 +70,7 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
 function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREntry) => void) {
     return (
         <div id="body-section">
-            <div className="mb-6">
+            <div className="mb-6 grid gap-6 md:grid-cols-2">
                 <DropdownInput 
                     name="Gender"
                     id="main-gender"
@@ -82,8 +83,6 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
                     defaultValue = {editedData.MainGender}
                     onChange={e => setEditedData({ ...editedData, MainGender: e == "" ? undefined : e as FRGender })}
                 />
-            </div>
-            <div className="mb-6">
                 <DropdownInput 
                     name="Number"
                     id="main-number"
@@ -96,6 +95,60 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
                     defaultValue = {editedData.MainNumber ?? ""}
                     onChange={e => setEditedData({ ...editedData, MainNumber: e == "" ? undefined : e as FRNumber })}
                 />
+            </div>
+            <div className="mb-6">
+                <ExpandWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
+                    <table className="table-auto">
+                        <thead>
+                            <tr>
+                                <th>Form</th>
+                                <th>Key</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{`${FRGender.Masculine} ${FRNumber.Singular}`}</td>
+                                <td>
+                                    <TextInput
+                                        id="masculine-singular"
+                                        defaultValue="Hello"
+                                        onChange={() => {}}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{`${FRGender.Feminine} ${FRNumber.Singular}`}</td>
+                                <td>
+                                    <TextInput
+                                        id="masculine-singular"
+                                        defaultValue="Hello"
+                                        onChange={() => {}}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{`${FRGender.Masculine} ${FRNumber.Plural}`}</td>
+                                <td>
+                                    <TextInput
+                                        id="masculine-singular"
+                                        defaultValue="Hello"
+                                        onChange={() => {}}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{`${FRGender.Feminine} ${FRNumber.Plural}`}</td>
+                                <td>
+                                    <TextInput
+                                        id="masculine-singular"
+                                        defaultValue="Hello"
+                                        onChange={() => {}}
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ExpandWrapper>
             </div>
         </div>
     )
@@ -160,5 +213,5 @@ export default function FREntryModal({ data, setData, close }: FREntryModalProps
                 </div>
             </div>
         </>
-    );
+    )
 }
