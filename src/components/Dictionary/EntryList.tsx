@@ -16,12 +16,30 @@ export default function EntryList({ key }: EntryListProps) {
         performSearch(key).catch(err => console.log(err));
     }, [key]);
     function setSearchResult(index: number, newResult: BaseEntry | null) {
+        let targetId = null;
         if(newResult === null) {
-            setSearchResults(searchResults.filter((_, idx) => index != idx));
-        } else {
-            setSearchResults(searchResults.map((result, idx) => {
-                return index == idx ? newResult : result;
+            setSearchResults(searchResults.filter((res, idx) => {
+                if(index == idx) {
+                    targetId = res.Id!;
+                    return false;
+                }
+                return true;
             }));
+            if(targetId) {
+                FREntryService.deleteEntry(targetId);
+            }
+        } else {
+            setSearchResults(searchResults.map((res, idx) => {
+                if(index == idx) {
+                    targetId = res.Id!;
+                    return newResult;
+                } else {
+                    return res;
+                }
+            }));
+            if(targetId) {
+                FREntryService.updateEntry(targetId, newResult as FREntry);
+            }
         }
     }
     async function performSearch(key: string) {
