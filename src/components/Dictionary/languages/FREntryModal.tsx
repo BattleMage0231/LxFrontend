@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FREntry, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
 import { Class } from "../../../utilites/base-entry";
 import TextInput from "../../common/TextInput";
@@ -183,6 +183,12 @@ export default function FREntryModal({ data, setData, close }: FREntryModalProps
     function updateEntryData() {
         setData(editedData);
     }
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'initial';
+        };
+    }, []);
     return (
         <>
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
