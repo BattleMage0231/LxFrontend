@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { FREntry, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
+import { FREntry, FRForm, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
 import { Class } from "../../../utilites/base-entry";
 import TextInput from "../../common/TextInput";
 import DropdownInput from "../../common/DropdownInput";
-import ExpandWrapper from "../../common/ExpandWrapper";
+import ExpandableWrapper from "../../common/ExpandableWrapper";
 
 type FREntryModalProps = {
     data: FREntry,
@@ -98,7 +98,7 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
                 />
             </div>
             <div className="mb-6">
-                <ExpandWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
+                <ExpandableWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
                     <table className="table-auto">
                         <thead>
                             <tr>
@@ -107,49 +107,97 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
                             </tr>
                         </thead>
                         <tbody>
+                            {
+                                Object.values(FRGender).flatMap(gender =>
+                                    Object.values(FRNumber).map(number => {
+                                        const form = editedData.MainForms[gender]?.[number]
+                                        return (
+                                            <tr key={`form-row-${gender}-${number}`}>
+                                                <td>{`${gender} ${number}`}</td>
+                                                <td>
+                                                    <TextInput
+                                                        defaultValue={form?.Key}
+                                                        onChange={(e) => {
+                                                            const editedDataClone = { ...editedData }
+                                                            if(!e) {
+                                                                if(editedDataClone.MainForms[gender]?.[number]) {
+                                                                    delete editedDataClone.MainForms[gender][number]
+                                                                }
+                                                            } else {
+                                                                if(!(gender in editedDataClone.MainForms)) {
+                                                                    editedDataClone.MainForms[gender] = {} as { [id in FRNumber] : FRForm }
+                                                                }
+                                                                editedDataClone.MainForms[gender]![number] = {
+                                                                    Key: e
+                                                                }
+                                                            }
+                                                            setEditedData(editedDataClone)
+                                                        }}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                )
+                            }
+                        </tbody>
+                    </table>
+                    <table className="table-auto w-full">
+                        <thead>
                             <tr>
-                                <td>{`${FRGender.Masculine} ${FRNumber.Singular}`}</td>
-                                <td>
-                                    <TextInput
-                                        id="masculine-singular"
-                                        defaultValue="Hello"
-                                        onChange={() => {}}
-                                    />
-                                </td>
+                                <th>Form</th>
                             </tr>
-                            <tr>
-                                <td>{`${FRGender.Feminine} ${FRNumber.Singular}`}</td>
+                        </thead>
+                        <tbody>
+                            {
+                                editedData.OtherForms.map((form, idx) => (
+                                    <tr key={`form-row-${idx}`}>
+                                        <td>
+                                            <div className="flex w-full">
+                                                <div>
+                                                    <TextInput
+                                                        defaultValue={form?.Key}
+                                                        onChange={(e) => {
+                                                            const editedDataClone = { ...editedData }
+                                                            editedData.OtherForms[idx].Key = e
+                                                            setEditedData(editedDataClone)
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="ml-auto">
+                                                    <a
+                                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                                        href="#a"
+                                                        onClick={() => {
+                                                            const editedDataClone = { ...editedData }
+                                                            editedData.OtherForms.splice(idx, 1);
+                                                            setEditedData(editedDataClone)
+                                                        }}
+                                                    >Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                            <tr key={`form-row-new`}>
                                 <td>
-                                    <TextInput
-                                        id="masculine-singular"
-                                        defaultValue="Hello"
-                                        onChange={() => {}}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{`${FRGender.Masculine} ${FRNumber.Plural}`}</td>
-                                <td>
-                                    <TextInput
-                                        id="masculine-singular"
-                                        defaultValue="Hello"
-                                        onChange={() => {}}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{`${FRGender.Feminine} ${FRNumber.Plural}`}</td>
-                                <td>
-                                    <TextInput
-                                        id="masculine-singular"
-                                        defaultValue="Hello"
-                                        onChange={() => {}}
-                                    />
+                                    <a
+                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                        href="#a"
+                                        onClick={() => {
+                                            const editedDataClone = { ...editedData }
+                                            editedData.OtherForms.push({ Key: "" })
+                                            setEditedData(editedDataClone)
+                                        }}
+                                    >
+                                        Add Form
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </ExpandWrapper>
+                </ExpandableWrapper>
             </div>
         </div>
     )
@@ -177,7 +225,7 @@ function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREnt
 }
 
 export default function FREntryModal({ data, setData, close }: FREntryModalProps) {
-    const [editedData, setEditedData] = useState(data);
+    const [editedData, setEditedData] = useState(JSON.parse(JSON.stringify(data)) as FREntry);
     function deleteEntry() {
         setData(null);
     }

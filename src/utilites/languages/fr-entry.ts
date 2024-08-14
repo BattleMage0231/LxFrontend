@@ -76,7 +76,7 @@ export type FREntry = FRNounEntry
     | FRAdjectiveEntry
     | BaseEntry
 
-export function getFRFormCode(gender?: FRGender, number?: FRNumber) {
+export function getFRNounAdjectiveCode(gender?: FRGender, number?: FRNumber) {
     let typeId = "";
     if(gender == FRGender.Masculine) {
         typeId += "m";
@@ -93,7 +93,7 @@ export function getFRTypeCode(entry: FREntry) {
     switch(entry.Class) {
         case Class.Noun: {
             const nounEntry = entry as FRNounEntry;
-            return `n${getFRFormCode(nounEntry.MainGender, nounEntry.MainNumber)}`;
+            return `n${getFRNounAdjectiveCode(nounEntry.MainGender, nounEntry.MainNumber)}`;
         }
         case Class.Verb: {
             const verbEntry = entry as FRVerbEntry;

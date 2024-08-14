@@ -6,7 +6,7 @@ type ExpandWrapperProps = {
     toHideMsg: string
 };
 
-export default function ExpandWrapper({ children, toShowMsg, toHideMsg }: ExpandWrapperProps) {
+export default function ExpandableWrapper({ children, toShowMsg, toHideMsg }: ExpandWrapperProps) {
     const [isOpened, setIsOpened] = useState(false);
     return (
         <div>

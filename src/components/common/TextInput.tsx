@@ -1,5 +1,5 @@
 type TextInputProps = {
-    id: string,
+    id?: string,
     name?: string,
     defaultValue?: string,
     onChange: (e: string) => void

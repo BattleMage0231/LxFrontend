@@ -8,4 +8,4 @@ class FREntryService extends BaseEntryService<FREntry> {
     }
 }
 
-export default new FREntryService(`${config.apiURL}/entry/fr`);
+export default new FREntryService(`${config.apiURL}/entry/fr`)

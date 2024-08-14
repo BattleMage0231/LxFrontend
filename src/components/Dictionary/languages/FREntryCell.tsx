@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 import { Class } from "../../../utilites/base-entry";
-import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry, getFRFormCode, getFRTypeCode } from "../../../utilites/languages/fr-entry";
+import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry, getFRNounAdjectiveCode, getFRTypeCode } from "../../../utilites/languages/fr-entry";
 import FREntryModal from "./FREntryModal";
 
 type FREntryCellProps = {
@@ -40,7 +40,7 @@ function renderNounAdjectiveBody(entry: FRNounEntry | FRAdjectiveEntry) {
                 acc.push(
                     <li key={`form-${gender}-${number}`}>
                         <p>
-                            <span>{`(${getFRFormCode(gender as FRGender, number as FRNumber)}) `}</span>
+                            <span>{`(${getFRNounAdjectiveCode(gender as FRGender, number as FRNumber)}) `}</span>
                             {`${form.Key}`}
                         </p>
                         {form.Notes && <p>{form.Notes}</p>}
