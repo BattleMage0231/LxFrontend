@@ -74,12 +74,7 @@ export type FROtherEntry = BaseEntry
 export type FREntry = FRNounEntry 
     | FRVerbEntry
     | FRAdjectiveEntry
-    | FRAdverbEntry
-    | FRArticleEntry
-    | FRConjunctionEntry
-    | FRPrepositionEntry
-    | FRPronounEntry
-    | FROtherEntry
+    | BaseEntry
 
 export function getFRFormCode(gender?: FRGender, number?: FRNumber) {
     let typeId = "";
