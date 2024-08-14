@@ -26,5 +26,6 @@ export type BaseEntry = {
     Definition?: string,
     Notes?: string,
     Examples: string[],
-    Synonyms: string[]
+    Synonyms: string[],
+    OtherForms: BaseForm[]
 }

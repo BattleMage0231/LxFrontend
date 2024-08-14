@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { Class } from "../../../utilites/base-entry";
-import { FRAdjectiveEntry, FREntry, FRNounEntry, FRVerbEntry, getFRFormCode, getFRTypeCode } from "../../../utilites/languages/fr-entry";
+import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry, getFRFormCode, getFRTypeCode } from "../../../utilites/languages/fr-entry";
 import FREntryModal from "./FREntryModal";
 
 type FREntryCellProps = {
@@ -31,45 +31,79 @@ function renderCellFooterRow(entry: FREntry) {
 }
 
 function renderNounAdjectiveBody(entry: FRNounEntry | FRAdjectiveEntry) {
-    const forms = entry.Forms.map((form, idx) => (
-        <li key={idx}>
-            <p>
-                {(form.Gender || form.Number) && <span>({getFRFormCode(form.Gender, form.Number)})</span>}
-                {` ${form.Key}`}
-            </p>
+    const mainForms = entry.MainForms
+    const otherForms = entry.OtherForms
+    const mainFormsRendered = Object.keys(FRGender).flatMap(gender =>
+        Object.keys(FRNumber).reduce<ReactElement[]>((acc, number) => {
+            const form = mainForms[gender as FRGender]?.[number as FRNumber]
+            if(form) {
+                acc.push(
+                    <li key={`form-${gender}-${number}`}>
+                        <p>
+                            <span>{`(${getFRFormCode(gender as FRGender, number as FRNumber)}) `}</span>
+                            {`${form.Key}`}
+                        </p>
+                        {form.Notes && <p>{form.Notes}</p>}
+                    </li>
+                )
+            }
+            return acc;
+        }, [])
+    )
+    const otherFormsRendered = otherForms.map((form, idx) => (
+        <li key={`form-${idx}`}>
+            <p>{form.Key}</p>
             {form.Notes && <p>{form.Notes}</p>}
         </li>
-    ))
+    ));
     return (
         <div>
-            {forms.length > 0 && <h3>Forms:</h3>}
-            <ul>{forms}</ul>
+            {(mainFormsRendered.length > 0 || otherFormsRendered.length > 0) && <h3>Forms:</h3>}
+            <ul>{mainFormsRendered}</ul>
+            <ul>{otherFormsRendered}</ul>
         </div>
     )
 }
 
 function renderVerbBody(entry: FRVerbEntry) {
-    const formsRendered = entry.Forms.map((form, idx) => (
-        <li key={idx}>
-            <p>
-                {(form.Person || form.Type) && <span>{`(${form.Person} ${form.Type})`}</span>}
-                {` ${form.Key}`}
-            </p>
+    const mainForms = entry.MainForms
+    const otherForms = entry.OtherForms
+    const mainFormsRendered = Object.keys(FRVerbConjugationType).flatMap(type =>
+        Object.keys(FRPerson).reduce<ReactElement[]>((acc, person) => {
+            const form = mainForms[type as FRVerbConjugationType]?.[person as FRPerson]
+            if(form) {
+                acc.push(
+                    <li key={`form-${type}-${person}`}>
+                        <p>
+                            <span>{`(${type} ${person}) `}</span>
+                            {`${form.Key}`}
+                        </p>
+                        {form.Notes && <p>{form.Notes}</p>}
+                    </li>
+                )
+            }
+            return acc;
+        }, [])
+    )
+    const otherFormsRendered = otherForms.map((form, idx) => (
+        <li key={`form-${idx}`}>
+            <p>{form.Key}</p>
             {form.Notes && <p>{form.Notes}</p>}
         </li>
-    ))
+    ));
     return (
         <div>
-            {formsRendered.length > 0 && <h3>Forms:</h3>}
-            <ul>{formsRendered}</ul>
+            {(mainFormsRendered.length > 0 || otherFormsRendered.length > 0) && <h3>Forms:</h3>}
+            <ul>{mainFormsRendered}</ul>
+            <ul>{otherFormsRendered}</ul>
         </div>
     )
 }
 
 function renderOtherBody(entry: FREntry) {
-    const formsRendered = entry.Forms.map((form, idx) => (
-        <li key={idx}>
-            <p>${form.Key}</p>
+    const formsRendered = entry.OtherForms.map((form, idx) => (
+        <li key={`form-${idx}`}>
+            <p>{form.Key}</p>
             {form.Notes && <p>{form.Notes}</p>}
         </li>
     ));

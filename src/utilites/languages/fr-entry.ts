@@ -1,4 +1,6 @@
-import { BaseEntry, BaseForm, Class } from "../base-entry";
+import { BaseEntry, BaseForm, Class } from "../base-entry"
+
+export type FRForm = BaseForm
 
 export enum FRGender {
     Masculine = "Masculine",
@@ -10,15 +12,10 @@ export enum FRNumber {
     Plural = "Plural"
 }
 
-export type FRNounForm = BaseForm & {
-    Gender?: FRGender,
-    Number?: FRNumber
-}
-
 export type FRNounEntry = BaseEntry & {
     MainGender?: FRGender,
     MainNumber?: FRNumber,
-    Forms: FRNounForm[]
+    MainForms: { [gender in FRGender]: { [numb in FRNumber]: FRForm | undefined } | undefined }
 }
 
 export enum FRPerson {
@@ -53,60 +50,26 @@ export enum FRVerbTransitivity {
     Intransitive = "Intransitive"
 }
 
-export type FRVerbForm = BaseForm & {
-    Person?: FRPerson,
-    Type?: FRVerbConjugationType
-}
-
 export type FRVerbEntry = BaseEntry & {
     Transitivity?: FRVerbTransitivity,
-    Forms: FRVerbForm[]
-}
-
-export type FRAdjectiveForm = BaseForm & {
-    Gender?: FRGender,
-    Number?: FRNumber
+    MainForms: { [type in FRVerbConjugationType]: { [person in FRPerson]: FRForm | undefined } | undefined }
 }
 
 export type FRAdjectiveEntry = BaseEntry & {
-    Forms: FRAdjectiveForm[]
+    MainForms: { [gender in FRGender]: { [numb in FRNumber]: FRForm | undefined } | undefined }
 }
 
-export type FRArticleForm = BaseForm
+export type FRArticleEntry = BaseEntry
 
-export type FRArticleEntry = BaseEntry & {
-    Forms: FRArticleForm[]
-}
+export type FRConjunctionEntry = BaseEntry
 
-export type FRConjunctionForm = BaseForm
+export type FRPrepositionEntry = BaseEntry
 
-export type FRConjunctionEntry = BaseEntry & {
-    Forms: FRConjunctionForm[]
-}
+export type FRPronounEntry = BaseEntry
 
-export type FRPrepositionForm = BaseForm
+export type FRAdverbEntry = BaseEntry
 
-export type FRPrepositionEntry = BaseEntry & {
-    Forms: FRPrepositionForm[]
-}
-
-export type FRPronounForm = BaseForm
-
-export type FRPronounEntry = BaseEntry & {
-    Forms: FRPronounForm[]
-}
-
-export type FRAdverbForm = BaseForm
-
-export type FRAdverbEntry = BaseEntry & {
-    Forms: FRAdverbForm[]
-}
-
-export type FROtherForm = BaseForm
-
-export type FROtherEntry = BaseEntry & {
-    Forms: FROtherForm[]
-}
+export type FROtherEntry = BaseEntry
 
 export type FREntry = FRNounEntry 
     | FRVerbEntry
