@@ -22,7 +22,8 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
                 Notes: editedData.Notes,
                 Examples: editedData.Examples,
                 Synonyms: editedData.Synonyms,
-                Forms: []
+                OtherForms: [],
+                ...(newClass in [Class.Noun, Class.Verb, Class.Adjective]) && { MainForms: {} }
             });
         }
     }
