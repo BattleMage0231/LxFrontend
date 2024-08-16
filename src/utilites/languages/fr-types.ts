@@ -12,7 +12,9 @@ export enum FRNumber {
     Plural = "Plural"
 }
 
-export type FRNounEntryForms = { [gender in FRGender]: { [numb in FRNumber]: FRForm | undefined } | undefined }
+export type FRNounEntryNumberForms = { [numb in FRNumber]: FRForm | undefined }
+
+export type FRNounEntryForms = { [gender in FRGender]: FRNounEntryNumberForms | undefined }
 
 export type FRNounEntry = BaseEntry & {
     MainGender?: FRGender,
@@ -30,7 +32,13 @@ export enum FRPerson {
     ThirdPlural = "ThirdPlural"
 }
 
-export enum FRVerbConjugationType {
+export enum FRVerbConjugationSingleType {
+    Infinitive = "Infinitive",
+    PresentParticiple = "PresentParticiple",
+    PastParticiple = "PastParticiple"
+}
+
+export enum FRVerbConjugationConjugatedType {
     IndicativePresent = "IndicativePresent",
     Imperfect = "Imperfect",
     CompoundPast = "CompoundPast",
@@ -42,18 +50,21 @@ export enum FRVerbConjugationType {
     SubjunctivePast = "SubjunctivePast",
     ConditionalPresent = "ConditionalPresent",
     ConditionalPast = "ConditionalPast",
-    ImperativePresent = "ImperativePresent",
-    Infinitive = "Infinitive",
-    PresentParticiple = "PresentParticiple",
-    PastParticiple = "PastParticiple"
+    ImperativePresent = "ImperativePresent"
 }
+
+export const FRVerbConjugationType = { ...FRVerbConjugationSingleType, ...FRVerbConjugationConjugatedType }
+
+export type FRVerbConjugationType = FRVerbConjugationSingleType | FRVerbConjugationConjugatedType
 
 export enum FRVerbTransitivity {
     Transitive = "Transitive",
     Intransitive = "Intransitive"
 }
 
-export type FRVerbEntryForms = { [type in FRVerbConjugationType]: { [person in FRPerson]: FRForm | undefined } | undefined }
+export type FRVerbEntryPersonForms = { [person in FRPerson]: FRForm | undefined }
+
+export type FRVerbEntryForms = { [type in FRVerbConjugationType]: FRVerbEntryPersonForms | undefined }
 
 export type FRVerbEntry = BaseEntry & {
     Transitivity?: FRVerbTransitivity,
@@ -61,7 +72,9 @@ export type FRVerbEntry = BaseEntry & {
     Class: Class.Verb
 }
 
-export type FRAdjectiveEntryForms = { [gender in FRGender]: { [numb in FRNumber]: FRForm | undefined } | undefined }
+export type FRAdjectiveEntryNumberForms = { [numb in FRNumber]: FRForm | undefined }
+
+export type FRAdjectiveEntryForms = { [gender in FRGender]: FRAdjectiveEntryNumberForms | undefined }
 
 export type FRAdjectiveEntry = BaseEntry & {
     MainForms: FRAdjectiveEntryForms,
