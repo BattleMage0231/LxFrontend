@@ -1,6 +1,8 @@
 import { Class } from "../base-entry"
 import { FRAdjectiveEntryForms, FREntry, FREntryWithMainForms, FREntryWithoutMainForms, FRGender, FRNounEntryForms, FRNumber, FRVerbEntryForms, FRVerbTransitivity } from "./fr-types"
 
+export type { FREntry }
+
 export function isFREntryWithMainForms(entry: FREntry): entry is FREntryWithMainForms {
     return (entry as FREntryWithMainForms).MainForms !== undefined;
 }
