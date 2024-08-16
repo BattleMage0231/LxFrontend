@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { BaseEntry, Language } from "../../utilites/base-entry";
-import FREntryService from "../../services/languages/fr-entry-service";
-import { useLanguage } from "../../contexts/language-context";
-import FREntryCell from "./languages/FREntryCell";
-import { FREntry } from "../../utilites/languages/fr-entry";
+import { useEffect, useState } from "react"
+import { BaseEntry, Language } from "../../utilites/base-entry"
+import FREntryService from "../../services/languages/fr-entry-service"
+import { useLanguage } from "../../contexts/language-context"
+import FREntryCell from "./languages/FREntryCell"
+import { FREntry } from "../../utilites/languages/fr-types"
 
 type EntryListProps = {
     key: string

@@ -1,7 +1,8 @@
-import { ReactElement, useState } from "react";
-import { Class } from "../../../utilites/base-entry";
-import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry, getFRNounAdjectiveCode, getFRTypeCode } from "../../../utilites/languages/fr-entry";
-import FREntryModal from "./FREntryModal";
+import { ReactElement, useState } from "react"
+import { Class } from "../../../utilites/base-entry"
+import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry } from "../../../utilites/languages/fr-types"
+import { getFRNounAdjectiveCode, getFRTypeCode } from "../../../utilites/languages/fr-entry"
+import FREntryModal from "./FREntryModal"
 
 type FREntryCellProps = {
     data: FREntry,
@@ -123,9 +124,9 @@ export default function FREntryCell({ data, setData }: FREntryCellProps) {
         <div>
             {headerRow}
             {
-                data.Class == Class.Noun ? <>{renderNounAdjectiveBody(data as FRNounEntry)}</> : 
-                data.Class == Class.Verb ? <>{renderVerbBody(data as FRVerbEntry)}</> : 
-                data.Class == Class.Adjective ? <>{renderNounAdjectiveBody(data as FRAdjectiveEntry)}</> :
+                data.Class == Class.Noun ? <>{renderNounAdjectiveBody(data)}</> : 
+                data.Class == Class.Verb ? <>{renderVerbBody(data)}</> : 
+                data.Class == Class.Adjective ? <>{renderNounAdjectiveBody(data)}</> :
                 <>{renderOtherBody(data)}</>
             }
             {footerRow}

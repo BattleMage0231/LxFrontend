@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { FREntry, FRForm, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-entry";
-import { Class } from "../../../utilites/base-entry";
-import TextInput from "../../common/TextInput";
-import DropdownInput from "../../common/DropdownInput";
-import ExpandableWrapper from "../../common/ExpandableWrapper";
+import { useEffect, useState } from "react"
+import { FREntry, FRForm, FRGender, FRNounEntry, FRNumber, FRVerbEntry, FRVerbTransitivity } from "../../../utilites/languages/fr-types"
+import { castFREntryToClass } from "../../../utilites/languages/fr-entry"
+import { Class } from "../../../utilites/base-entry"
+import TextInput from "../../common/TextInput"
+import DropdownInput from "../../common/DropdownInput"
+import ExpandableWrapper from "../../common/ExpandableWrapper"
 
 type FREntryModalProps = {
     data: FREntry,
@@ -14,17 +15,7 @@ type FREntryModalProps = {
 function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry) => void) {
     function changeClass(newClass: Class) {
         if(newClass != editedData.Class) {
-            setEditedData({
-                Id: editedData.Id,
-                Class: newClass,
-                Key: editedData.Key,
-                Definition: editedData.Definition,
-                Notes: editedData.Notes,
-                Examples: editedData.Examples,
-                Synonyms: editedData.Synonyms,
-                OtherForms: [],
-                ...(newClass in [Class.Noun, Class.Verb, Class.Adjective]) && { MainForms: {} }
-            });
+            setEditedData(castFREntryToClass(editedData, newClass));
         }
     }
     return (
@@ -251,8 +242,8 @@ export default function FREntryModal({ data, setData, close }: FREntryModalProps
                                     <form>
                                         { renderModalHeaderRow(editedData, setEditedData) }
                                         { 
-                                            editedData.Class == Class.Noun ? <>{renderModalNounBody(editedData as FRNounEntry, setEditedData)}</> :
-                                            editedData.Class == Class.Verb ? <>{renderModalVerbBody(editedData as FRVerbEntry, setEditedData)}</> :
+                                            editedData.Class == Class.Noun ? <>{renderModalNounBody(editedData, setEditedData)}</> :
+                                            editedData.Class == Class.Verb ? <>{renderModalVerbBody(editedData, setEditedData)}</> :
                                             <></>
                                         }
                                     </form>
