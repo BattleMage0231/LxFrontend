@@ -1,19 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import EntryList from "./EntryList";
 
 export default function Dictionary() {
-    const params = useParams();
-    const navigate = useNavigate();
+    const params = useParams()
     return (
         <div className="container mx-auto px-6">
             <div className="bg-gray-100 px-4 pt-5 rounded-lg">
-                <SearchBar 
-                    search={(x: string) => navigate(`/search/${x}`)}
-                />
+                <SearchBar />
                 <h2>Results:</h2>
-                <EntryList key={params.key ?? ""} />
+                <EntryList searchString={params.key ?? ""} />
             </div>
         </div>
-    );
+    )
 }

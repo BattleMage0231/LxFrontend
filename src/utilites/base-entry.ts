@@ -23,6 +23,7 @@ export type BaseEntry = {
     Id?: string,
     Class: Class,
     Key: string,
+    NormalizedKey?: string,
     Definition?: string,
     Notes?: string,
     Examples: string[],

@@ -12,7 +12,7 @@ export abstract class BaseEntryService<T extends BaseEntry> {
     }
 
     getAllEntries = async() => this.instance.get<T[]>("/")
-        .then((res) => res.data).catch((err) => console.log(err))
+        .then((res) => res.data).catch(console.log)
 
     getEntryById = async(id: string) => this.instance.get<T>(`/${id}`)
         .then((res) => res.data)
@@ -24,11 +24,19 @@ export abstract class BaseEntryService<T extends BaseEntry> {
         });
 
     createEntry = async(entry: T) => this.instance.post<T>("/", entry)
-        .then((res) => res.data).catch((err) => console.log(err))
+        .then((res) => res.data).catch(console.log)
     
     updateEntry = async(id: string, entry: T) => this.instance.put(`/${id}`, entry)
-        .catch((err) => console.log(err))
+        .catch(console.log)
 
     deleteEntry = async(id: string) => this.instance.delete(`/${id}`)
-        .catch((err) => console.log(err))
+        .catch(console.log)
+
+    suggestSearch = async(searchString: string) => this.instance.get<string[]>(`/suggest?searchString=${searchString}`)
+        .then((res) => res.data)
+        .catch(console.log)
+    
+    search = async(searchString: string) => this.instance.get<T[]>(`/search?searchString=${searchString}`)
+        .then((res) => res.data)
+        .catch(console.log)
 }

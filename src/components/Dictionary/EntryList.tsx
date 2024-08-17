@@ -6,46 +6,45 @@ import FREntryCell from "./languages/FREntryCell"
 import { FREntry } from "../../utilites/languages/fr-types"
 
 type EntryListProps = {
-    key: string
+    searchString: string
 }
 
-export default function EntryList({ key }: EntryListProps) {
-    const language = useLanguage();
-    const [searchResults, setSearchResults] = useState<BaseEntry[]>([]);
+export default function EntryList({ searchString }: EntryListProps) {
+    const language = useLanguage()
+    const [searchResults, setSearchResults] = useState<BaseEntry[]>([])
     useEffect(() => {
-        performSearch(key).catch(err => console.log(err));
-    }, [key]);
+        if(searchString) {
+            FREntryService.search(searchString).then(results => setSearchResults(results ?? [])).catch(console.log)
+        } else {
+            FREntryService.getAllEntries().then(results => setSearchResults(results ?? [])).catch(console.log)
+        }
+    }, [searchString])
     function setSearchResult(index: number, newResult: BaseEntry | null) {
-        let targetId = null;
+        let targetId = null
         if(newResult === null) {
             setSearchResults(searchResults.filter((res, idx) => {
                 if(index == idx) {
-                    targetId = res.Id!;
-                    return false;
+                    targetId = res.Id!
+                    return false
                 }
-                return true;
+                return true
             }));
             if(targetId) {
-                FREntryService.deleteEntry(targetId).catch(err => console.log(err));
+                FREntryService.deleteEntry(targetId).catch(console.log)
             }
         } else {
             setSearchResults(searchResults.map((res, idx) => {
                 if(index == idx) {
-                    targetId = res.Id!;
-                    return newResult;
+                    targetId = res.Id!
+                    return newResult
                 } else {
-                    return res;
+                    return res
                 }
             }));
             if(targetId) {
-                FREntryService.updateEntry(targetId, newResult as FREntry).catch(err => console.log(err));
+                FREntryService.updateEntry(targetId, newResult as FREntry).catch(console.log)
             }
         }
-    }
-    async function performSearch(key: string) {
-        console.log(key);
-        const results = await FREntryService.getAllEntries();
-        setSearchResults(results ?? []);
     }
     const searchResultsRendered = searchResults.map((result, idx) => 
         <div key={result.Id}>
@@ -57,11 +56,11 @@ export default function EntryList({ key }: EntryListProps) {
                 />
             }
         </div>
-    );
+    )
     return (
         <div>
             <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             <ul className="list-disc list-inside">{searchResultsRendered}</ul>
         </div>
-    );
+    )
 }
