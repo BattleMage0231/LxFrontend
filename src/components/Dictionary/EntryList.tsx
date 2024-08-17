@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { BaseEntry, Language } from "../../utilites/BaseEntry"
-import FREntryService from "../../services/languages/FREntryService"
 import { useLanguage } from "../../contexts/languageContext"
-import FREntryCell from "./languages/FREntryCell"
+import FREntryCell from "./entries/FREntryCell"
 import { FREntry } from "../../utilites/languages/FRTypes"
+import { useEntryService } from "../../services/apiService"
 
 type EntryListProps = {
     searchString: string
@@ -11,14 +11,15 @@ type EntryListProps = {
 
 export default function EntryList({ searchString }: EntryListProps) {
     const language = useLanguage()
+    const entryService = useEntryService()
     const [searchResults, setSearchResults] = useState<BaseEntry[]>([])
     useEffect(() => {
         if(searchString) {
-            FREntryService.search(searchString).then(results => setSearchResults(results ?? [])).catch(console.log)
+            entryService.search(searchString).then(results => setSearchResults(results ?? [])).catch(console.log)
         } else {
-            FREntryService.getAllEntries().then(results => setSearchResults(results ?? [])).catch(console.log)
+            entryService.getAllEntries().then(results => setSearchResults(results ?? [])).catch(console.log)
         }
-    }, [searchString])
+    }, [searchString, entryService])
     function setSearchResult(index: number, newResult: BaseEntry | null) {
         let targetId = null
         if(newResult === null) {
@@ -30,7 +31,7 @@ export default function EntryList({ searchString }: EntryListProps) {
                 return true
             }));
             if(targetId) {
-                FREntryService.deleteEntry(targetId).catch(console.log)
+                entryService.deleteEntry(targetId).catch(console.log)
             }
         } else {
             setSearchResults(searchResults.map((res, idx) => {
@@ -42,7 +43,7 @@ export default function EntryList({ searchString }: EntryListProps) {
                 }
             }));
             if(targetId) {
-                FREntryService.updateEntry(targetId, newResult as FREntry).catch(console.log)
+                entryService.updateEntry(targetId, newResult as FREntry).catch(console.log)
             }
         }
     }
@@ -52,7 +53,7 @@ export default function EntryList({ searchString }: EntryListProps) {
                 language == Language.FR &&
                 <FREntryCell
                     data={result as FREntry}
-                    setData={(res: FREntry | null) => setSearchResult(idx, res)}
+                    setData={res => setSearchResult(idx, res)}
                 />
             }
         </div>

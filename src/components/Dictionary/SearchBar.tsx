@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import FREntryService from "../../services/languages/FREntryService"
+import { useEntryService } from "../../services/apiService"
 
 export default function SearchBar() {
     const navigate = useNavigate()
+    const entryService = useEntryService()
     const [searchInput, setSearchInput] = useState("")
+    const searchInputRef = useRef(searchInput)
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [suggestions, setSuggestions] = useState<string[]>([])
-    const searchInputRef = useRef(searchInput)
     useEffect(() => { searchInputRef.current = searchInput }, [searchInput])
     useEffect(() => {
         const interval = setInterval(() => {
             if(searchInputRef.current) {
-                FREntryService.suggestSearch(searchInputRef.current)
+                entryService.suggestSearch(searchInputRef.current)
                     .then(res => setSuggestions(res ?? [])).catch(console.log)
             }
         }, 2000)
         return () => clearInterval(interval)
-    }, [])
+    }, [entryService])
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault()
         setSearchInput(e.target.value)
