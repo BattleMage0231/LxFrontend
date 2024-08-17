@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import FREntryService from "../../services/languages/fr-entry-service"
+import FREntryService from "../../services/languages/FREntryService"
 
 export default function SearchBar() {
     const navigate = useNavigate()

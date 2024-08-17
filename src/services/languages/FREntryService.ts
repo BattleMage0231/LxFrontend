@@ -1,5 +1,5 @@
-import { FREntry } from "../../utilites/languages/fr-entry.ts";
-import { BaseEntryService } from "../base-entry-service.ts";
+import { FREntry } from "../../utilites/languages/FREntry.ts";
+import { BaseEntryService } from "../BaseEntryService.ts";
 import config from '../config.ts';
 
 class FREntryService extends BaseEntryService<FREntry> {

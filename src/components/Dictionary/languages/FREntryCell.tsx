@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react"
-import { Class } from "../../../utilites/base-entry"
-import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry } from "../../../utilites/languages/fr-types"
-import { getFRNounAdjectiveCode, getFRTypeCode } from "../../../utilites/languages/fr-entry"
+import { Class } from "../../../utilites/BaseEntry"
+import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry } from "../../../utilites/languages/FRTypes"
+import { getFRNounAdjectiveCode, getFRTypeCode } from "../../../utilites/languages/FREntry"
 import FREntryModal from "./FREntryModal"
 
 type FREntryCellProps = {

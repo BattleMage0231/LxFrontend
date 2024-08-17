@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { BaseEntry } from '../utilites/base-entry';
+import { BaseEntry } from '../utilites/BaseEntry';
 
 export abstract class BaseEntryService<T extends BaseEntry> {
     protected readonly instance: AxiosInstance;

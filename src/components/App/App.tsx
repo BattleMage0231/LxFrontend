@@ -1,7 +1,7 @@
 import { Routes, Route, Outlet } from "react-router-dom";
-import { LanguageContext } from "../../contexts/language-context.ts";
+import { LanguageContext } from "../../contexts/languageContext.ts";
 import Dictionary from "../Dictionary/Dictionary.tsx";
-import { Language } from "../../utilites/base-entry.ts";
+import { Language } from "../../utilites/BaseEntry.ts";
 import Navbar from "./Navbar.tsx";
 
 export default function App() {

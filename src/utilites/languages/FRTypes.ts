@@ -1,4 +1,4 @@
-import { BaseEntry, BaseForm, Class } from "../base-entry"
+import { BaseEntry, BaseForm, Class } from "../BaseEntry"
 
 export type FRForm = BaseForm
 
