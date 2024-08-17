@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { BaseEntry, Language } from "../../utilites/BaseEntry"
+import { BaseEntry, Language } from "../../utilites/entries/BaseEntry"
 import { useLanguage } from "../../contexts/languageContext"
 import FREntryCell from "./entries/FREntryCell"
-import { FREntry } from "../../utilites/languages/FRTypes"
+import { FREntry } from "../../utilites/entries/FRTypes"
 import { useEntryService } from "../../services/apiService"
+import { useTranslation } from "react-i18next"
 
 type EntryListProps = {
     searchString: string
@@ -11,6 +12,7 @@ type EntryListProps = {
 
 export default function EntryList({ searchString }: EntryListProps) {
     const language = useLanguage()
+    const { t } = useTranslation()
     const entryService = useEntryService()
     const [searchResults, setSearchResults] = useState<BaseEntry[]>([])
     useEffect(() => {
@@ -60,6 +62,7 @@ export default function EntryList({ searchString }: EntryListProps) {
     )
     return (
         <div>
+            <p>{t('dictionary.results')}</p>
             <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             <ul className="list-disc list-inside">{searchResultsRendered}</ul>
         </div>

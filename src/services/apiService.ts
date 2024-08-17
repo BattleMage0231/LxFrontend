@@ -1,5 +1,5 @@
 import { useLanguage } from "../contexts/languageContext"
-import { Language } from "../utilites/BaseEntry"
+import { Language } from "../utilites/entries/BaseEntry"
 import FREntryService from "./entries/FREntryService"
 
 const config = {

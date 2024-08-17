@@ -1,4 +1,7 @@
+import { useTranslation } from 'react-i18next'
+
 export default function Navbar() {
+    const { t } = useTranslation()
     return (
         <nav className="bg-white bg-gray-900">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -9,10 +12,10 @@ export default function Navbar() {
                 <div className="w-full md:block md:w-auto">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
                         <li className="navbar-item">
-                            <a href="#">Dictionary</a>
+                            <a href="#">{t('navbar.dictionary')}</a>
                         </li>
                         <li className="navbar-item">
-                            <a href="#">Export</a>
+                            <a href="#">{t('navbar.export')}</a>
                         </li>
                     </ul>
                 </div>

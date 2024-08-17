@@ -1,4 +1,4 @@
-import { Class } from "../BaseEntry"
+import { Class } from "./BaseEntry"
 import { FRAdjectiveEntryForms, FREntry, FREntryWithMainForms, FREntryWithoutMainForms, FRGender, FRNounEntryForms, FRNumber, FRVerbEntryForms, FRVerbTransitivity } from "./FRTypes"
 
 export type { FREntry }

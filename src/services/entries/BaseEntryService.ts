@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { BaseEntry } from '../../utilites/BaseEntry';
+import { BaseEntry } from '../../utilites/entries/BaseEntry';
 
 export interface EntryService {
     getAllEntries: () => Promise<BaseEntry[] | void>,

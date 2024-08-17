@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useEntryService } from "../../services/apiService"
+import { useTranslation } from "react-i18next"
 
 export default function SearchBar() {
     const navigate = useNavigate()
     const entryService = useEntryService()
+    const { t } = useTranslation()
     const [searchInput, setSearchInput] = useState("")
     const searchInputRef = useRef(searchInput)
     const [isInputFocused, setIsInputFocused] = useState(false)
@@ -33,14 +35,13 @@ export default function SearchBar() {
                 <div className="relative">
                     <input
                         className="block w-full p-4 ps-10 text-sm text-gray-900 border"
-                        type="search" 
-                        placeholder="Search"
+                        type="search"
                         onChange={handleChange}
                         onFocus={() => setIsInputFocused(true)}
                         onBlur={() => setIsInputFocused(false)} 
                         value={searchInput} 
                     />
-                    <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 font-medium rounded-lg text-sm px-4 py-2" type="submit">Submit</button>
+                    <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 font-medium rounded-lg text-sm px-4 py-2" type="submit">{t('searchBar.search')}</button>
                     {
                         isInputFocused && suggestions.length > 0 &&
                         <ul className="absolute z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg" onMouseDown={(e) => e.preventDefault()}>

@@ -1,7 +1,7 @@
 import { Routes, Route, Outlet } from "react-router-dom";
 import { LanguageContext } from "../../contexts/languageContext.ts";
 import Dictionary from "../Dictionary/Dictionary.tsx";
-import { Language } from "../../utilites/BaseEntry.ts";
+import { Language } from "../../utilites/entries/BaseEntry.ts";
 import Navbar from "./Navbar.tsx";
 
 export default function App() {
@@ -12,7 +12,6 @@ export default function App() {
                     <Route index element={<Dictionary />}></Route>
                     <Route path='search' element={<Dictionary />}></Route>
                     <Route path='search/:key' element={<Dictionary />}></Route>
-                    <Route path='test' element={<h1>Test</h1>}></Route>
                 </Route>
             </Routes>
         </LanguageContext.Provider>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
-import { FRAdjectiveEntry, FRAdjectiveEntryNumberForms, FREntry, FRGender, FRNounEntry, FRNounEntryNumberForms, FRNumber, FRPerson, FRVerbConjugationConjugatedType, FRVerbConjugationSingleType, FRVerbConjugationType, FRVerbEntry, FRVerbEntryPersonForms, FRVerbTransitivity } from "../../../utilites/languages/FRTypes"
-import { castFREntryToClass } from "../../../utilites/languages/FREntry"
-import { Class } from "../../../utilites/BaseEntry"
+import { FRAdjectiveEntry, FRAdjectiveEntryNumberForms, FREntry, FRGender, FRNounEntry, FRNounEntryNumberForms, FRNumber, FRPerson, FRVerbConjugationConjugatedType, FRVerbConjugationSingleType, FRVerbConjugationType, FRVerbEntry, FRVerbEntryPersonForms, FRVerbTransitivity } from "../../../utilites/entries/FRTypes"
+import { castFREntryToClass } from "../../../utilites/entries/FREntry"
+import { Class } from "../../../utilites/entries/BaseEntry"
 import TextInput from "../../common/TextInput"
 import DropdownInput from "../../common/DropdownInput"
 import ExpandableWrapper from "../../common/ExpandableWrapper"
+import { useTranslation } from "react-i18next"
+import { TFunction } from "i18next"
 
 type FREntryModalProps = {
     data: FREntry,
@@ -12,7 +14,7 @@ type FREntryModalProps = {
     close: () => void
 }
 
-function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry) => void) {
+function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     function changeClass(newClass: Class) {
         if(newClass != editedData.Class) {
             setEditedData(castFREntryToClass(editedData, newClass));
@@ -22,7 +24,7 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
         <div id="header-section">
             <div className="mb-6">
                 <TextInput 
-                    name="Key"
+                    name={t('dictionary.entry.key')}
                     id="key" 
                     defaultValue = {editedData.Key}
                     onChange={(e: string) => setEditedData({ ...editedData, Key: e })}
@@ -30,7 +32,7 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
             </div>
             <div className="mb-6">
                 <TextInput 
-                    name="Definition"
+                    name={t('dictionary.entry.definition')}
                     id="definition" 
                     defaultValue = {editedData.Definition}
                     onChange={(e: string) => setEditedData({ ...editedData, Definition: e })}
@@ -38,7 +40,7 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
             </div>
             <div className="mb-6">
                 <TextInput 
-                    name="Notes"
+                    name={t('dictionary.entry.notes')}
                     id="notes" 
                     defaultValue = {editedData.Notes}
                     onChange={(e: string) => setEditedData({ ...editedData, Notes: e })}
@@ -46,7 +48,7 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
             </div>
             <div className="mb-6">
                 <DropdownInput 
-                    name="Class"
+                    name={t('dictionary.entry.class')}
                     id="class"
                     choices={Object.keys(Class).map(cls => {
                         return { displayName: cls, value: cls }
@@ -59,12 +61,12 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
     )
 }
 
-function renderModalOtherFormsTable(editedData: FREntry, setEditedData: (res: FREntry) => void) {
+function renderModalOtherFormsTable(editedData: FREntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     return (
         <table className="table-auto w-full">
             <thead>
                 <tr>
-                    <th>Form</th>
+                    <th>{t('dictionary.entry.forms')}</th>
                 </tr>
             </thead>
             <tbody>
@@ -92,7 +94,7 @@ function renderModalOtherFormsTable(editedData: FREntry, setEditedData: (res: FR
                                                 editedData.OtherForms.splice(idx, 1)
                                                 setEditedData(editedDataClone)
                                             }}
-                                        >Delete</a>
+                                        >{t('common.delete')}</a>
                                     </div>
                                 </div>
                             </td>
@@ -110,7 +112,7 @@ function renderModalOtherFormsTable(editedData: FREntry, setEditedData: (res: FR
                                 setEditedData(editedDataClone)
                             }}
                         >
-                            Add Form
+                            {t('dictionary.entry.addForm')}
                         </a>
                     </td>
                 </tr>
@@ -119,7 +121,7 @@ function renderModalOtherFormsTable(editedData: FREntry, setEditedData: (res: FR
     )
 }
 
-function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREntry) => void) {
+function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     const mainFormsRendered = Object.values(FRGender).flatMap(gender =>
         Object.values(FRNumber).map(number => {
             const form = editedData.MainForms[gender]?.[number]
@@ -153,10 +155,10 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
         <div id="body-section">
             <div className="mb-6 grid gap-6 md:grid-cols-2">
                 <DropdownInput 
-                    name="Gender"
+                    name={t('dictionary.entry.gender')}
                     id="main-gender"
                     choices={[{
-                        displayName: "Unspecified",
+                        displayName: t('dictionary.entry.unspecified'),
                         value: ""
                     }].concat(Object.keys(FRGender).map(gender => {
                         return { displayName: gender, value: gender }
@@ -165,10 +167,10 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
                     onChange={e => setEditedData({ ...editedData, MainGender: e == "" ? undefined : e as FRGender })}
                 />
                 <DropdownInput 
-                    name="Number"
+                    name={t('dictionary.entry.number')}
                     id="main-number"
                     choices={[{
-                        displayName: "Unspecified",
+                        displayName: t('dictionary.entry.unspecified'),
                         value: ""
                     }].concat(Object.keys(FRNumber).map(numb => {
                         return { displayName: numb, value: numb }
@@ -178,24 +180,24 @@ function renderModalNounBody(editedData: FRNounEntry, setEditedData: (res: FREnt
                 />
             </div>
             <div className="mb-6">
-                <ExpandableWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
+                <ExpandableWrapper toShowMsg={`❯ ${t('dictionary.entry.showForms')}`} toHideMsg={`❮ ${t('dictionary.entry.hideForms')}`}>
                     <table className="table-auto">
                         <thead>
                             <tr>
-                                <th>Form</th>
-                                <th>Key</th>
+                                <th>{t('dictionary.entry.form')}</th>
+                                <th>{t('dictionary.entry.key')}</th>
                             </tr>
                         </thead>
                         <tbody>{mainFormsRendered}</tbody>
                     </table>
-                    { renderModalOtherFormsTable(editedData, setEditedData) }
+                    { renderModalOtherFormsTable(editedData, setEditedData, t) }
                 </ExpandableWrapper>
             </div>
         </div>
     )
 }
 
-function renderModalAdjectiveBody(editedData: FRAdjectiveEntry, setEditedData: (res: FREntry) => void) {
+function renderModalAdjectiveBody(editedData: FRAdjectiveEntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     const mainFormsRendered = Object.values(FRGender).flatMap(gender =>
         Object.values(FRNumber).map(number => {
             const form = editedData.MainForms[gender]?.[number]
@@ -228,24 +230,24 @@ function renderModalAdjectiveBody(editedData: FRAdjectiveEntry, setEditedData: (
     return (
         <div id="body-section">
             <div className="mb-6">
-                <ExpandableWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
+                <ExpandableWrapper toShowMsg={`❯ ${t('dictionary.entry.showForms')}`} toHideMsg={`❮ ${t('dictionary.entry.hideForms')}`}>
                     <table className="table-auto">
                         <thead>
                             <tr>
-                                <th>Form</th>
-                                <th>Key</th>
+                                <th>{t('dictionary.entry.form')}</th>
+                                <th>{t('dictionary.entry.key')}</th>
                             </tr>
                         </thead>
                         <tbody>{mainFormsRendered}</tbody>
                     </table>
-                    { renderModalOtherFormsTable(editedData, setEditedData) }
+                    { renderModalOtherFormsTable(editedData, setEditedData, t) }
                 </ExpandableWrapper>
             </div>
         </div>
     )
 }
 
-function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) => void) {
+function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     function renderFormTable(type: FRVerbConjugationConjugatedType) {
         return Object.values(FRPerson).map(person => {
             const form = editedData.MainForms[type]?.[person]
@@ -307,8 +309,8 @@ function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREnt
                     <table className="table-auto" key={`form-table-${type}`}>
                         <thead>
                             <tr>
-                                <th>Form</th>
-                                <th>Key</th>
+                                <th>{t('dictionary.entry.form')}</th>
+                                <th>{t('dictionary.entry.key')}</th>
                             </tr>
                         </thead>
                         <tbody>{renderFormTable(type as FRVerbConjugationConjugatedType)}</tbody>
@@ -321,7 +323,7 @@ function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREnt
         <div id="body-section">
             <div className="mb-6">
                 <DropdownInput 
-                    name="Transitivity"
+                    name={t('dictionary.entry.transitivity')}
                     id="transitivity"
                     choices={[{
                         displayName: "Unspecified",
@@ -333,25 +335,26 @@ function renderModalVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREnt
                     onChange={e => setEditedData({ ...editedData, Transitivity: e == "" ? undefined : e as FRVerbTransitivity })}
                 />
             </div>
-            <ExpandableWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
+            <ExpandableWrapper toShowMsg={`❯ ${t('dictionary.entry.showForms')}`} toHideMsg={`❮ ${t('dictionary.entry.hideForms')}`}>
                 {mainFormsRendered}
-                { renderModalOtherFormsTable(editedData, setEditedData) }
+                { renderModalOtherFormsTable(editedData, setEditedData, t) }
             </ExpandableWrapper>
         </div>
     )
 }
 
-function renderModalOtherBody(editedData: FREntry, setEditedData: (res: FREntry) => void) {
+function renderModalOtherBody(editedData: FREntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     return (
         <div id="body-section">
-            <ExpandableWrapper toShowMsg="❯ Show Forms" toHideMsg="❮ Hide Forms">
-                { renderModalOtherFormsTable(editedData, setEditedData) }
+            <ExpandableWrapper toShowMsg={`❯ ${t('dictionary.entry.showForms')}`} toHideMsg={`❮ ${t('dictionary.entry.hideForms')}`}>
+                { renderModalOtherFormsTable(editedData, setEditedData, t) }
             </ExpandableWrapper>
         </div>
     )
 }
 
 export default function FREntryModal({ data, setData, close }: FREntryModalProps) {
+    const { t } = useTranslation()
     const [editedData, setEditedData] = useState(JSON.parse(JSON.stringify(data)) as FREntry);
     function deleteEntry() {
         setData(null);
@@ -373,24 +376,24 @@ export default function FREntryModal({ data, setData, close }: FREntryModalProps
                     <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                         <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                             <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Edit Entry</h3>
+                                <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">{t('dictionary.entry.editEntry')}</h3>
                                 <div className="mt-2 text-sm ">
                                     <form>
-                                        { renderModalHeaderRow(editedData, setEditedData) }
+                                        { renderModalHeaderRow(editedData, setEditedData, t) }
                                         { 
-                                            editedData.Class == Class.Noun ? <>{renderModalNounBody(editedData, setEditedData)}</> :
-                                            editedData.Class == Class.Adjective ? <>{renderModalAdjectiveBody(editedData, setEditedData)}</> :
-                                            editedData.Class == Class.Verb ? <>{renderModalVerbBody(editedData, setEditedData)}</> :
-                                            <>{renderModalOtherBody(editedData, setEditedData)}</>
+                                            editedData.Class == Class.Noun ? <>{renderModalNounBody(editedData, setEditedData, t)}</> :
+                                            editedData.Class == Class.Adjective ? <>{renderModalAdjectiveBody(editedData, setEditedData, t)}</> :
+                                            editedData.Class == Class.Verb ? <>{renderModalVerbBody(editedData, setEditedData, t)}</> :
+                                            <>{renderModalOtherBody(editedData, setEditedData, t)}</>
                                         }
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                            <button type="button" className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto" onClick={() => { deleteEntry(); close(); }}>Delete</button>
-                            <button type="button" className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 sm:ml-3 sm:w-auto" onClick={close}>Cancel</button>
-                            <button type="button" className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto" onClick={() => { updateEntryData(); close(); }}>Save</button>
+                            <button type="button" className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto" onClick={() => { deleteEntry(); close(); }}>{t('common.delete')}</button>
+                            <button type="button" className="inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 sm:ml-3 sm:w-auto" onClick={close}>{t('common.cancel')}</button>
+                            <button type="button" className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto" onClick={() => { updateEntryData(); close(); }}>{t('common.save')}</button>
                         </div>
                     </div>
                 </div>

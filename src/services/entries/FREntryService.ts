@@ -1,4 +1,4 @@
-import { FREntry } from "../../utilites/languages/FREntry.ts";
+import { FREntry } from "../../utilites/entries/FREntry.ts";
 import { BaseEntryService } from "./BaseEntryService.ts";
 
 export default class FREntryService extends BaseEntryService<FREntry> {
