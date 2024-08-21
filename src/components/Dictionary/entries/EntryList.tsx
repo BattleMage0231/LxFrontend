@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { BaseEntry, Language } from "../../utilites/entries/BaseEntry"
-import { useLanguage } from "../../contexts/languageContext"
-import FREntryCell from "./entries/FREntryCell"
-import { FREntry } from "../../utilites/entries/FRTypes"
-import { useEntryService } from "../../services/apiService"
+import { BaseEntry, Language } from "../../../utilites/entries/BaseEntry"
+import { useLanguage } from "../../../contexts/languageContext"
+import FREntryCell from "./FREntryCell"
+import { FREntry } from "../../../utilites/entries/FRTypes"
+import { useEntryService } from "../../../services/apiService"
 import { useTranslation } from "react-i18next"
 
 type EntryListProps = {
@@ -11,7 +11,7 @@ type EntryListProps = {
 }
 
 export default function EntryList({ searchString }: EntryListProps) {
-    const language = useLanguage()
+    const { language } = useLanguage()
     const { t } = useTranslation()
     const entryService = useEntryService()
     const [searchResults, setSearchResults] = useState<BaseEntry[]>([])

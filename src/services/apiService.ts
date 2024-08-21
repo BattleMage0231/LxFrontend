@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import { useLanguage } from "../contexts/languageContext"
 import { Language } from "../utilites/entries/BaseEntry"
 import FREntryService from "./entries/FREntryService"
@@ -11,6 +12,6 @@ const entryServices = {
 }
 
 export const useEntryService = () => {
-    const language = useLanguage()
-    return entryServices[language]
+    const { language } = useLanguage()
+    return useMemo(() => entryServices[language], [language])
 }

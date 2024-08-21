@@ -1,12 +1,11 @@
 import { Routes, Route, Outlet } from "react-router-dom";
-import { LanguageContext } from "../../contexts/languageContext.ts";
-import Dictionary from "../Dictionary/Dictionary.tsx";
-import { Language } from "../../utilites/entries/BaseEntry.ts";
+import { LanguageProvider } from "../../contexts/languageContext";
+import Dictionary from "../Dictionary/Dictionary";
 import Navbar from "./Navbar.tsx";
 
 export default function App() {
     return (
-        <LanguageContext.Provider value={Language.FR}>
+        <LanguageProvider>
             <Routes>
                 <Route path='/' element={<Layout />}>
                     <Route index element={<Dictionary />}></Route>
@@ -14,7 +13,7 @@ export default function App() {
                     <Route path='search/:key' element={<Dictionary />}></Route>
                 </Route>
             </Routes>
-        </LanguageContext.Provider>
+        </LanguageProvider>
     );
 }
 
