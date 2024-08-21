@@ -1,7 +1,7 @@
-import { Routes, Route, Outlet } from "react-router-dom";
-import { LanguageProvider } from "../../contexts/languageContext";
-import Dictionary from "../Dictionary/Dictionary";
-import Navbar from "./Navbar.tsx";
+import { Routes, Route, Outlet } from "react-router-dom"
+import Dictionary from "../Dictionary/Dictionary"
+import Navbar from "./Navbar.tsx"
+import { LanguageProvider } from "../../contexts/languageProvider.tsx"
 
 export default function App() {
     return (
@@ -14,7 +14,7 @@ export default function App() {
                 </Route>
             </Routes>
         </LanguageProvider>
-    );
+    )
 }
 
 function Layout() {
@@ -23,5 +23,5 @@ function Layout() {
             <Navbar />
             <Outlet />
         </>
-    );
+    )
 }

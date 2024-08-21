@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useLanguage } from "../contexts/languageContext"
+import { useLanguage } from "../contexts/useLanguage"
 import { Language } from "../utilites/entries/BaseEntry"
 import FREntryService from "./entries/FREntryService"
 

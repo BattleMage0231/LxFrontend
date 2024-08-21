@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { BaseEntry, Language } from "../../../utilites/entries/BaseEntry"
-import { useLanguage } from "../../../contexts/languageContext"
+import { useLanguage } from "../../../contexts/useLanguage"
 import FREntryCell from "./FREntryCell"
 import { FREntry } from "../../../utilites/entries/FRTypes"
 import { useEntryService } from "../../../services/apiService"
