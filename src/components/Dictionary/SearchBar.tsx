@@ -32,7 +32,7 @@ export default function SearchBar() {
     return (
         <div>
             <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-                <div className="relative">
+                <div className="relative pointer-events-auto">
                     <input
                         className="block w-full p-4 ps-10 text-sm text-gray-900 border"
                         type="search"

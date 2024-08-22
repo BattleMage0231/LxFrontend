@@ -9,7 +9,10 @@ const resources = {
 }
 
 i18n.use(initReactI18next)
-    .init({ resources })
+    .init({
+        resources,
+        lng: 'fr'
+    })
     .catch(console.log)
 
 export default i18n

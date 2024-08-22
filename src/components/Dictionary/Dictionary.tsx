@@ -7,14 +7,14 @@ export default function Dictionary() {
     const params = useParams()
     const { t } = useTranslation()
     return (
-        <div className="container mx-auto px-6">
-            <div className="bg-gray-100 px-4 pt-5 rounded-lg">
-                <div className="relative w-full flex items-center">
-                    <div className="absolute w-full">
+        <div className="mx-auto px-20">
+            <div className="bg-base-200 px-4 pt-5">
+                <div className="relative flex">
+                    <div className="w-full absolute left-1/2 -translate-x-1/2 pointer-events-none">
                         <SearchBar />
                     </div>
                     <div className="ml-auto">
-                        <button type="button" className="text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 cursor-pointer" onClick={() => {}}>{t('dictionary.create')}</button>
+                        <button className="btn btn-primary" onClick={() => {}}>{t('dictionary.create')}</button>
                     </div>
                 </div>
                 <EntryList searchString={params.key ?? ""} />
