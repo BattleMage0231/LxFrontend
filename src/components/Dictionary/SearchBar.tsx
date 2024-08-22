@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useEntryService } from "../../services/apiService"
-import { useTranslation } from "react-i18next"
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useEntryService } from '../../services/apiService'
+import { useTranslation } from 'react-i18next'
 
 export default function SearchBar() {
     const navigate = useNavigate()
     const entryService = useEntryService()
     const { t } = useTranslation()
-    const [searchInput, setSearchInput] = useState("")
+    const [searchInput, setSearchInput] = useState('')
     const searchInputRef = useRef(searchInput)
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [suggestions, setSuggestions] = useState<string[]>([])
@@ -21,47 +21,44 @@ export default function SearchBar() {
         }, 2000)
         return () => clearInterval(interval)
     }, [entryService])
+    const suggestionsRendered = suggestions.map(data => (
+        <li key={`${data}`}>
+            <a onClick={() => {
+                setSearchInput(data);
+                (document.activeElement as HTMLElement).blur()
+                navigate(`/search/${data}`)
+            }}>{data}</a>
+        </li>
+    ))
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        e.preventDefault()
-        setSearchInput(e.target.value)
+        setSearchInput(e.target.value.trim())
     };
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
+    function handleSubmit() {
         navigate(`/search/${searchInput}`)
     }
     return (
-        <div>
-            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-                <div className="relative pointer-events-auto">
-                    <input
-                        className="block w-full p-4 ps-10 text-sm text-gray-900 border"
-                        type="search"
-                        onChange={handleChange}
-                        onFocus={() => setIsInputFocused(true)}
-                        onBlur={() => setIsInputFocused(false)} 
-                        value={searchInput} 
-                    />
-                    <button className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 font-medium rounded-lg text-sm px-4 py-2" type="submit">{t('searchBar.search')}</button>
-                    {
-                        isInputFocused && suggestions.length > 0 &&
-                        <ul className="absolute z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg" onMouseDown={(e) => e.preventDefault()}>
-                            {
-                                suggestions.map(data => (
-                                    <li
-                                        key={`suggestion-${data}`} 
-                                        className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                                        onClick={() => {
-                                            setSearchInput(data);
-                                            (document.activeElement as HTMLElement).blur()
-                                            navigate(`/search/${data}`)
-                                        }}
-                                    >{data}</li>
-                                ))
-                            }
-                        </ul>
-                    }
+        <div className="inline-flex">
+            <input
+                className="input input-bordered w-80"
+                onChange={handleChange}
+                onFocus={() => setIsInputFocused(true)}
+                onBlur={() => setIsInputFocused(false)}
+                value={searchInput}
+            />
+            <button
+                className="btn btn-primary ml-2"
+                onClick={handleSubmit}
+            >
+                {t('searchBar.search')}
+            </button>
+            {
+                isInputFocused && suggestions.length > 0 &&
+                <div className="absolute top-full bg-base-100 shadow rounded-box w-80">
+                    <ul className="menu" onMouseDown={e => e.preventDefault()}>
+                        {suggestionsRendered}
+                    </ul>
                 </div>
-            </form>
+            }
         </div>
     )
 }

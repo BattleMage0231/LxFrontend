@@ -10,10 +10,10 @@ export default function Dictionary() {
         <div className="mx-auto px-20">
             <div className="bg-base-200 px-4 pt-5">
                 <div className="relative flex">
-                    <div className="w-full absolute left-1/2 -translate-x-1/2 pointer-events-none">
+                    <div className="w-2/3 absolute left-1/2 -translate-x-1/2 flex justify-center">
                         <SearchBar />
                     </div>
-                    <div className="ml-auto">
+                    <div className="ml-auto z-10">
                         <button className="btn btn-primary" onClick={() => {}}>{t('dictionary.create')}</button>
                     </div>
                 </div>

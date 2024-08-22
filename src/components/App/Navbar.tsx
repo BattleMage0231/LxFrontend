@@ -12,7 +12,7 @@ export default function Navbar() {
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
-                    <li><a>{t('navbar.dictionary')}</a></li>
+                    <li><a href="/">{t('navbar.dictionary')}</a></li>
                     <li><a>{t('navbar.export')}</a></li>
                 </ul>
             </div>
