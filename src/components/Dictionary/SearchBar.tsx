@@ -17,6 +17,8 @@ export default function SearchBar() {
             if(searchInputRef.current) {
                 entryService.suggestSearch(searchInputRef.current)
                     .then(res => setSuggestions(res ?? [])).catch(console.log)
+            } else {
+                setSuggestions([])
             }
         }, 2000)
         return () => clearInterval(interval)
