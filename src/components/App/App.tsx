@@ -3,6 +3,15 @@ import Dictionary from '../Dictionary/Dictionary'
 import Navbar from './Navbar'
 import { LanguageProvider } from '../../contexts/languageProvider'
 
+function Layout() {
+    return (
+        <>
+            <Navbar />
+            <Outlet />
+        </>
+    )
+}
+
 export default function App() {
     return (
         <LanguageProvider>
@@ -14,14 +23,5 @@ export default function App() {
                 </Route>
             </Routes>
         </LanguageProvider>
-    )
-}
-
-function Layout() {
-    return (
-        <>
-            <Navbar />
-            <Outlet />
-        </>
     )
 }

@@ -6,6 +6,7 @@
     "dictionary": {
         "create": "Créer",
         "entry": {
+            "forms": "Formes",
             "form": "Forme",
             "synonyms": "Synonymes",
             "editEntry": "Modifier l'entrée",

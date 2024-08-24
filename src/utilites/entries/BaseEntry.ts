@@ -16,7 +16,8 @@ export enum Class {
 
 export type BaseForm = {
     Key: string,
-    Notes?: string
+    Notes?: string,
+    tempId?: string
 }
 
 export type BaseEntry = {

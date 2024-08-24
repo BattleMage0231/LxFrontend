@@ -1,21 +1,20 @@
-type TextInputProps = {
+type TextAreaProps = {
     label?: string,
     defaultValue?: string,
     onChange: (e: string) => void
 }
 
-export default function TextInput({ label, defaultValue, onChange }: TextInputProps) {
+export default function TextArea({ label, defaultValue, onChange }: TextAreaProps) {
     return (
-        <div className="form-control max-w-xs">
+        <div className="form-control">
             {
                 label &&
                 <label className="label">
                     <span className="label-text">{label}</span>
                 </label>
             }
-            <input
-                type="text"
-                className="input input-bordered"
+            <textarea
+                className="textarea textarea-bordered leading-tight resize-none"
                 defaultValue={defaultValue}
                 onChange={e => onChange(e.target.value)}
             />

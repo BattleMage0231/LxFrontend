@@ -54,7 +54,7 @@ export function getFRTypeCode(entry: FREntry) {
 
 export function castFREntryToClass(entry: FREntry, newClass: Class): FREntry {
     if(entry.Class == newClass) {
-        return { ...entry }
+        return entry
     }
     const newEntryBase = {
         Id: entry.Id,

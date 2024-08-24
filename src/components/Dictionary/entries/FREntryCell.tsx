@@ -13,7 +13,7 @@ type FREntryCellProps = {
     setData: (res: FREntry | null) => void
 }
 
-function renderCellHeader(entry: FREntry, t: TFunction, handleEdit: () => void) {
+function renderHeader(entry: FREntry, t: TFunction, handleEdit: () => void) {
     const examplesRendered = entry.Examples.map((ex, idx) => <li key={idx}>{ex}</li>)
     const typeId = getFRTypeCode(entry)
     return (
@@ -145,7 +145,7 @@ function renderOtherBody(entry: FREntry, t: TFunction) {
 export default function FREntryCell({ data, setData }: FREntryCellProps) {
     const { t } = useTranslation()
     const [isModalShown, setIsModalShown] = useState(false)
-    const header = renderCellHeader(data, t, () => setIsModalShown(true))
+    const header = renderHeader(data, t, () => setIsModalShown(true))
     return (
         <div className="card px-5 pt-3">
             {header}
