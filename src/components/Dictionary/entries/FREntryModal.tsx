@@ -18,27 +18,29 @@ type FREntryModalProps = {
 
 function renderHeader(editedData: FREntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     const classOptionsRendered = Object.values(Class).map(cls => 
-        <option key={cls}>{cls}</option>
+        <option key={cls} value={cls}>{t(`class.${cls}`)}</option>
     )
     return (
         <>
-            <TextInput
-                label={t('dictionary.entry.key')}
-                defaultValue={editedData.Key}
-                onChange={e => setEditedData({ ...editedData, Key: e.trim() })}
-            />
+            <div className="grid grid-cols-2 gap-2">
+                <TextInput
+                    label={t('dictionary.entry.key')}
+                    defaultValue={editedData.Key}
+                    onChange={e => setEditedData({ ...editedData, Key: e.trim() })}
+                />
+                <DropdownInput
+                    label={t('dictionary.entry.class')}
+                    defaultValue={editedData.Class}
+                    onChange={e => setEditedData(castFREntryToClass(editedData, e as Class))}
+                >
+                    {classOptionsRendered}
+                </DropdownInput>
+            </div>
             <TextArea
                 label={t('dictionary.entry.definition')}
                 defaultValue={editedData.Definition}
                 onChange={e => setEditedData({ ...editedData, Definition: e.trim() })}
             />
-            <DropdownInput
-                label={t('dictionary.entry.class')}
-                defaultValue={editedData.Class}
-                onChange={e => setEditedData(castFREntryToClass(editedData, e as Class))}
-            >
-                {classOptionsRendered}
-            </DropdownInput>
         </>
     )
 }
@@ -107,12 +109,14 @@ function renderNounAdjectiveFormsTable(editedData: FRNounEntry | FRAdjectiveEntr
         mainForms[gender][number] = { Key: newKey }
         setEditedData({ ...editedData, MainForms: mainForms })
     }
-    const mainFormsRendered = Object.values(FRGender).flatMap(gender =>
-        Object.values(FRNumber).map(number => {
+    const mainFormsRendered = Object.values(FRGender).flatMap(gender => {
+        const displayGender = t(`gender.${gender}`)
+        return Object.values(FRNumber).map(number => {
+            const displayNumber = t(`number.${number}`)
             const form = editedData.MainForms[gender]?.[number]
             return (
                 <tr key={`${gender}-${number}`}>
-                    <td>{`${gender} ${number}`}</td>
+                    <td>{`${displayGender} ${displayNumber}`}</td>
                     <td>
                         <TextInput
                             defaultValue={form?.Key}
@@ -122,7 +126,7 @@ function renderNounAdjectiveFormsTable(editedData: FRNounEntry | FRAdjectiveEntr
                 </tr>
             )
         })
-    )
+    })
     return (
         <table className="table">
             <thead>
@@ -138,10 +142,10 @@ function renderNounAdjectiveFormsTable(editedData: FRNounEntry | FRAdjectiveEntr
 
 function renderNounBody(editedData: FRNounEntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     const genderOptions = Object.values(FRGender).map(gender => 
-        <option key={gender}>{gender}</option>
+        <option key={gender} value={gender}>{t(`gender.${gender}`)}</option>
     )
     const numberOptions = Object.values(FRNumber).map(number => 
-        <option key={number}>{number}</option>
+        <option key={number} value={number}>{t(`number.${number}`)}</option>
     )
     const mainFormsRendered = renderNounAdjectiveFormsTable(editedData, setEditedData, t)
     const otherFormsRendered = renderOtherFormsTable(editedData, setEditedData, t)
@@ -192,7 +196,7 @@ function renderAdjectiveBody(editedData: FRAdjectiveEntry, setEditedData: (res: 
 
 function renderVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) => void, t: TFunction) {
     const transitivityOptions = Object.values(FRVerbTransitivity).map(trans => 
-        <option key={trans}>{trans}</option>
+        <option key={trans} value={trans}>{t(`transitivity.${trans}`)}</option>
     )
     function deleteRow(type: FRVerbConjugationType, person: FRPerson) {
         const mainForms = JSON.parse(JSON.stringify(editedData.MainForms)) as FRVerbEntryForms
@@ -208,11 +212,13 @@ function renderVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) =
         setEditedData({ ...editedData, MainForms: mainForms })
     }
     function renderFormTable(type: FRVerbConjugationConjugatedType) {
+        const displayType = t(`conjugationType.${type}`)
         const rows = Object.values(FRPerson).map(person => {
+            const displayPerson = t(`person.${person}`)
             const form = editedData.MainForms[type]?.[person]
             return (
                 <tr key={person}>
-                    <td>{`${person}`}</td>
+                    <td>{displayPerson}</td>
                     <td>
                         <TextInput
                             defaultValue={form?.Key}
@@ -224,7 +230,7 @@ function renderVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) =
         })
         return (
             <div key={type}>
-                <h2>{type}</h2>
+                <h2>{displayType}</h2>
                 <table className="table table-xs">
                     <thead>
                         <tr>
@@ -238,11 +244,12 @@ function renderVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) =
         )
     }
     const singleFormsRendered = Object.values(FRVerbConjugationSingleType).map(type => {
+        const displayType = t(`conjugationType.${type}`)
         const conj = editedData.MainForms[type]?.FirstSingular
         return (
             <TextInput
                 key={type}
-                label={type}
+                label={displayType}
                 defaultValue={conj?.Key}
                 onChange={e => e ? updateRow(type, FRPerson.FirstSingular, e) : deleteRow(type, FRPerson.FirstSingular)}
             />

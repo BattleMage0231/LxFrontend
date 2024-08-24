@@ -85,12 +85,15 @@ function renderNounAdjectiveBody(entry: FRNounEntry | FRAdjectiveEntry, t: TFunc
 function renderVerbBody(entry: FRVerbEntry, t: TFunction) {
     const mainFormsRendered = Object.keys(FRVerbConjugationType).flatMap(type =>
         Object.keys(FRPerson).reduce<ReactElement[]>((acc, person) => {
+            const displayType = t(`conjugationType.${type}`)
+            const displayPerson = t(`person.${person}`)
             const form = entry.MainForms[type as FRVerbConjugationType]?.[person as FRPerson]
             if(form) {
                 acc.push(
                     <li key={`${type}-${person}`}>
                         <p>
-                            <span>{`(${type} ${person}) `}</span>
+                            <span>{`(${displayType}) `}</span>
+                            <span>{`${displayPerson} `}</span>
                             {form.Key}
                         </p>
                     </li>

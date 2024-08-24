@@ -28,7 +28,6 @@ export default function CreateEntryButton() {
         if(data) {
             entryService.createEntry(data).catch(console.log)
         }
-        setIsModalShown(false)
     }
     return (
         <>

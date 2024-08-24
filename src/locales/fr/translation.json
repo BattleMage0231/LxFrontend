@@ -31,5 +31,53 @@
         "cancel": "Annuler",
         "edit": "Modifier",
         "save": "Enregistrer"
+    },
+    "class": {
+        "Noun": "Nom",
+        "Verb": "Verbe",
+        "Adjective": "Adjectif",
+        "Adverb": "Adverbe",
+        "Preposition": "Préposition",
+        "Article": "Article",
+        "Conjunction": "Conjonction",
+        "Pronoun": "Pronom",
+        "Other": "Autre"
+    },
+    "gender": {
+        "Masculine": "Masculin",
+        "Feminine": "Féminin"
+    },
+    "number": {
+        "Singular": "Singulier",
+        "Plural": "Pluriel"
+    },
+    "transitivity": {
+        "Transitive": "Transitif",
+        "Intransitive": "Intransitif"
+    },
+    "person": {
+        "FirstSingular": "Je / j'",
+        "SecondSingular": "Tu",
+        "ThirdSingular": "Il, elle, on",
+        "FirstPlural": "Nous",
+        "SecondPlural": "Vous",
+        "ThirdPlural": "Ils, elles"
+    },
+    "conjugationType": {
+        "IndicativePresent": "Présent",
+        "Imperfect": "Imparfait",
+        "CompoundPast": "Passé composé",
+        "SimplePast": "Passé simple",
+        "PerfectPast": "Plus-que-parfait",
+        "SimpleFuture": "Futur simple",
+        "PerfectFuture": "Futur antérieur",
+        "SubjunctivePresent": "Subjonctif présent",
+        "SubjunctivePast": "Subjonctif passé",
+        "ConditionalPresent": "Conditionnel présent",
+        "ConditionalPast": "Conditionnel passé",
+        "ImperativePresent": "Impératif présent",
+        "Infinitive": "Infinitif",
+        "PresentParticiple": "Participe présent",
+        "PastParticiple": "Participe passé"
     }
 }
