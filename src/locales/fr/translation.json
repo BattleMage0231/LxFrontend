@@ -4,11 +4,9 @@
         "export": "Exporter"
     },
     "dictionary": {
-        "results": "Résultats",
         "create": "Créer",
         "entry": {
             "form": "Forme",
-            "forms": "Formes",
             "synonyms": "Synonymes",
             "editEntry": "Modifier l'entrée",
             "key": "Clef",

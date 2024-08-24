@@ -1,8 +1,8 @@
-import { BaseEntry, Language } from "../../../utilites/entries/BaseEntry"
-import { useLanguage } from "../../../contexts/useLanguage"
-import FREntryCell from "./FREntryCell"
-import { FREntry } from "../../../utilites/entries/FRTypes"
-import { useTranslation } from "react-i18next"
+import { BaseEntry, Language } from '../../../utilites/entries/BaseEntry'
+import { useLanguage } from '../../../contexts/useLanguage'
+import FREntryCell from './FREntryCell'
+import { FREntry } from '../../../utilites/entries/FRTypes'
+import { Fragment } from 'react/jsx-runtime'
 
 type EntryListProps = {
     searchResults: BaseEntry[],
@@ -11,9 +11,8 @@ type EntryListProps = {
 
 export default function EntryList({ searchResults, setSearchResult }: EntryListProps) {
     const { language } = useLanguage()
-    const { t } = useTranslation()
     const searchResultsRendered = searchResults.map((result, idx) => 
-        <div key={result.Id}>
+        <Fragment key={result.Id}>
             {
                 language == Language.FR &&
                 <FREntryCell
@@ -21,13 +20,7 @@ export default function EntryList({ searchResults, setSearchResult }: EntryListP
                     setData={res => setSearchResult(idx, res)}
                 />
             }
-        </div>
+        </Fragment>
     )
-    return (
-        <div>
-            <p>{t('dictionary.results')}</p>
-            <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-            <ul className="list-disc list-inside">{searchResultsRendered}</ul>
-        </div>
-    )
+    return <ul>{searchResultsRendered}</ul>
 }

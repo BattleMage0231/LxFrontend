@@ -30,24 +30,18 @@ export default function SearchBar() {
             }}>{data}</a>
         </li>
     ))
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setSearchInput(e.target.value.trim())
-    };
-    function handleSubmit() {
-        navigate(`/search/${searchInput}`)
-    }
     return (
         <div className="inline-flex">
             <input
                 className="input input-bordered w-80"
-                onChange={handleChange}
+                onChange={e => setSearchInput(e.target.value.trim())}
                 onFocus={() => setIsInputFocused(true)}
                 onBlur={() => setIsInputFocused(false)}
                 value={searchInput}
             />
             <button
                 className="btn btn-primary ml-2"
-                onClick={handleSubmit}
+                onClick={() => navigate(`/search/${searchInput}`)}
             >
                 {t('searchBar.search')}
             </button>

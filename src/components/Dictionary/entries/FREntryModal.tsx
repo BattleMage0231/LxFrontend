@@ -38,14 +38,18 @@ function renderModalHeaderRow(editedData: FREntry, setEditedData: (res: FREntry)
                     onChange={(e: string) => setEditedData({ ...editedData, Definition: e })}
                 />
             </div>
-            <div className="mb-6">
-                <TextInput 
-                    name={t('dictionary.entry.notes')}
-                    id="notes" 
-                    defaultValue = {editedData.Notes}
-                    onChange={(e: string) => setEditedData({ ...editedData, Notes: e })}
-                />
-            </div>
+            {
+                /*
+                <div className="mb-6">
+                    <TextInput 
+                        name={t('dictionary.entry.notes')}
+                        id="notes" 
+                        defaultValue = {editedData.Notes}
+                        onChange={(e: string) => setEditedData({ ...editedData, Notes: e })}
+                    />
+                </div>
+                */ 
+            }
             <div className="mb-6">
                 <DropdownInput 
                     name={t('dictionary.entry.class')}
