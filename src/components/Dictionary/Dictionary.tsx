@@ -1,14 +1,13 @@
 import { useParams } from 'react-router-dom'
 import SearchBar from './SearchBar'
 import EntryList from './entries/EntryList'
-import { useTranslation } from 'react-i18next'
 import { useEntryService } from '../../services/apiService'
 import { useEffect, useState } from 'react'
 import { BaseEntry } from '../../utilites/entries/BaseEntry'
+import CreateEntryButton from './entries/CreateEntryButton'
 
 export default function Dictionary() {
     const params = useParams()
-    const { t } = useTranslation()
     const entryService = useEntryService()
     const [searchResults, setSearchResults] = useState<BaseEntry[]>([])
     useEffect(() => {
@@ -53,7 +52,7 @@ export default function Dictionary() {
                         <SearchBar />
                     </div>
                     <div className="ml-auto">
-                        <button className="btn btn-primary" onClick={() => {}}>{t('dictionary.create')}</button>
+                        <CreateEntryButton />
                     </div>
                 </div>
                 <EntryList searchResults={searchResults} setSearchResult={setSearchResult} />

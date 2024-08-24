@@ -1,4 +1,4 @@
-import { Class } from "./BaseEntry"
+import { BaseForm, Class } from "./BaseEntry"
 import { FRAdjectiveEntryForms, FREntry, FREntryWithMainForms, FREntryWithoutMainForms, FRGender, FRNounEntryForms, FRNumber, FRVerbEntryForms, FRVerbTransitivity } from "./FRTypes"
 
 export type { FREntry }
@@ -89,5 +89,16 @@ export function castFREntryToClass(entry: FREntry, newClass: Class): FREntry {
         }
         default:
             return { ...newEntryBase, Class: newClass } as FREntryWithoutMainForms;
+    }
+}
+
+export default function createDefaultFREntry(): FREntry {
+    return {
+        Key: '',
+        Class: Class.Noun,
+        Examples: [] as string[],
+        Synonyms: [] as string[],
+        OtherForms: [] as BaseForm[],
+        MainForms: {} as FRNounEntryForms
     }
 }
