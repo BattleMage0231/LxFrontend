@@ -6,6 +6,7 @@ import FREntryModal from './FREntryModal'
 import { Class } from '../../../utilites/entries/BaseEntry'
 import { FRAdjectiveEntry, FREntry, FRGender, FRNounEntry, FRNumber, FRPerson, FRVerbConjugationType, FRVerbEntry } from '../../../utilites/entries/FRTypes'
 import { getFRNounAdjectiveCode, getFRTypeCode } from '../../../utilites/entries/FREntry'
+import { createPortal } from 'react-dom'
 
 type FREntryCellProps = {
     data: FREntry,
@@ -154,13 +155,14 @@ export default function FREntryCell({ data, setData }: FREntryCellProps) {
                 data.Class == Class.Adjective ? <>{renderNounAdjectiveBody(data, t)}</> :
                 <>{renderOtherBody(data, t)}</>
             }
-            { isModalShown && 
+            { isModalShown && createPortal(
                 <FREntryModal 
                     data={data}
                     close={() => setIsModalShown(false)} 
                     setData={setData}
-                /> 
-            }
+                />,
+                document.body
+            )}
         </div>
     )
 }

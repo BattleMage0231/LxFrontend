@@ -12,8 +12,8 @@ export default function Dictionary() {
     const entryService = useEntryService()
     const [searchResults, setSearchResults] = useState<BaseEntry[]>([])
     useEffect(() => {
-        if(params.searchString) {
-            entryService.search(params.searchString).then(results => setSearchResults(results ?? [])).catch(console.log)
+        if(params.key) {
+            entryService.search(params.key).then(results => setSearchResults(results ?? [])).catch(console.log)
         } else {
             entryService.getAllEntries().then(results => setSearchResults(results ?? [])).catch(console.log)
         }
@@ -48,11 +48,11 @@ export default function Dictionary() {
     return (
         <div className="mx-auto px-20">
             <div className="bg-base-200 px-4 pt-5">
-                <div className="relative flex">
+                <div className="relative flex z-50">
                     <div className="w-2/3 absolute left-1/2 -translate-x-1/2 flex justify-center">
                         <SearchBar />
                     </div>
-                    <div className="ml-auto z-10">
+                    <div className="ml-auto">
                         <button className="btn btn-primary" onClick={() => {}}>{t('dictionary.create')}</button>
                     </div>
                 </div>

@@ -22,7 +22,7 @@ export default function SearchBar() {
         return () => clearInterval(interval)
     }, [entryService])
     const suggestionsRendered = suggestions.map(data => (
-        <li key={`${data}`}>
+        <li key={data}>
             <a onClick={() => {
                 setSearchInput(data);
                 (document.activeElement as HTMLElement).blur()
