@@ -48,8 +48,8 @@ export default function Dictionary() {
     return (
         <div className="mx-auto px-20">
             <div className="bg-base-200 px-4 pt-5">
-                <div className="relative flex z-50">
-                    <div className="w-2/3 absolute left-1/2 -translate-x-1/2 flex justify-center">
+                <div className="relative flex">
+                    <div className="w-2/3 absolute left-1/2 -translate-x-1/2 flex justify-center z-40">
                         <SearchBar />
                     </div>
                     <div className="ml-auto">
