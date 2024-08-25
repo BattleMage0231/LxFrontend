@@ -9,7 +9,7 @@ type DropdownInputProps = {
 
 export default function DropdownInput({ label, defaultValue, onChange, children }: DropdownInputProps) {
     return (
-        <div className="form-control max-w-xs">
+        <div className="form-control">
             {
                 label &&
                 <label className="label">
@@ -17,7 +17,7 @@ export default function DropdownInput({ label, defaultValue, onChange, children 
                 </label>
             }
             <select
-                className="select select-bordered"
+                className="select select-bordered w-full"
                 defaultValue={defaultValue}
                 onChange={e => onChange(e.target.value)}
             >

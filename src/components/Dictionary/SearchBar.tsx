@@ -33,12 +33,13 @@ export default function SearchBar() {
         </li>
     ))
     return (
-        <div className="relative inline-flex w-full justify-center">
+        <div className="relative inline-flex w-full">
             <input
                 className="input input-bordered w-full max-w-md"
                 onChange={e => setSearchInput(e.target.value.trim())}
                 onFocus={() => setIsInputFocused(true)}
                 onBlur={() => setIsInputFocused(false)}
+                onKeyDown={e => e.key == 'Enter' && navigate(`/search/${searchInput}`)}
                 value={searchInput}
             />
             <button
