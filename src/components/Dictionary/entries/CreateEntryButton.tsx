@@ -31,7 +31,7 @@ export default function CreateEntryButton() {
     }
     return (
         <>
-            <button className="btn btn-primary" onClick={openModal}>{t('dictionary.create')}</button>
+            <button className="btn btn-primary w-full sm:w-auto" onClick={openModal}>{t('dictionary.create')}</button>
             { isModalShown && createPortal(
                 <>
                     {

@@ -75,23 +75,25 @@ function renderOtherFormsTable(editedData: FREntry, setEditedData: (res: FREntry
         </tr>
     )) 
     return (
-        <table className="table">
-            <thead>
-                <tr>
-                    <th>{t('dictionary.entry.forms')}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {otherFormsRendered}
-                <tr>
-                    <td>
-                        <button className="btn btn-success" onClick={addOtherRow}>
-                            {t('dictionary.entry.addForm')}
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div className="overflow-x-auto">
+            <table className="table table-xs">
+                <thead>
+                    <tr>
+                        <th>{t('dictionary.entry.forms')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {otherFormsRendered}
+                    <tr>
+                        <td>
+                            <button className="btn btn-success" onClick={addOtherRow}>
+                                {t('dictionary.entry.addForm')}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     )
 }
 
@@ -128,15 +130,17 @@ function renderNounAdjectiveFormsTable(editedData: FRNounEntry | FRAdjectiveEntr
         })
     })
     return (
-        <table className="table">
-            <thead>
-                <tr>
-                    <th>{t('dictionary.entry.form')}</th>
-                    <th>{t('dictionary.entry.key')}</th>
-                </tr>
-            </thead>
-            <tbody>{mainFormsRendered}</tbody>
-        </table>
+        <div className="overflow-x-auto">
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>{t('dictionary.entry.form')}</th>
+                        <th>{t('dictionary.entry.key')}</th>
+                    </tr>
+                </thead>
+                <tbody>{mainFormsRendered}</tbody>
+            </table>
+        </div>
     )
 }
 
@@ -231,15 +235,17 @@ function renderVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) =
         return (
             <div key={type}>
                 <h2>{displayType}</h2>
-                <table className="table table-xs">
-                    <thead>
-                        <tr>
-                            <th>{t('dictionary.entry.form')}</th>
-                            <th>{t('dictionary.entry.key')}</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </table>
+                <div className="overflow-x-auto">
+                    <table className="table table-xs">
+                        <thead>
+                            <tr>
+                                <th>{t('dictionary.entry.form')}</th>
+                                <th>{t('dictionary.entry.key')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </table>
+                </div>
             </div>
         )
     }
@@ -272,7 +278,7 @@ function renderVerbBody(editedData: FRVerbEntry, setEditedData: (res: FREntry) =
                 toHideMsg={t('dictionary.entry.hideForms')}
             >
                 {singleFormsRendered}
-                <div className="grid grid-cols-2 gap-20">{conjugatedFormsRendered}</div>
+                <div className="grid">{conjugatedFormsRendered}</div>
                 {otherFormsRendered}
             </Collapsible>
         </>

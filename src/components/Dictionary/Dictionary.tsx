@@ -45,13 +45,13 @@ export default function Dictionary() {
         }
     }
     return (
-        <div className="mx-auto px-20">
+        <div className="mx-auto">
             <div className="bg-base-200 px-4 pt-5">
-                <div className="relative flex">
-                    <div className="w-2/3 absolute left-1/2 -translate-x-1/2 flex justify-center z-40">
+                <div className="flex flex-col sm:flex-row">
+                    <div className="w-full px-5 z-40">
                         <SearchBar />
                     </div>
-                    <div className="ml-auto">
+                    <div className="w-full sm:w-auto mt-4 sm:mt-auto px-5">
                         <CreateEntryButton />
                     </div>
                 </div>

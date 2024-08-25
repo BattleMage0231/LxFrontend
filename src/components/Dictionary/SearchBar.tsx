@@ -33,9 +33,9 @@ export default function SearchBar() {
         </li>
     ))
     return (
-        <div className="inline-flex">
+        <div className="relative inline-flex w-full justify-center">
             <input
-                className="input input-bordered w-80"
+                className="input input-bordered w-full max-w-md"
                 onChange={e => setSearchInput(e.target.value.trim())}
                 onFocus={() => setIsInputFocused(true)}
                 onBlur={() => setIsInputFocused(false)}
@@ -45,11 +45,15 @@ export default function SearchBar() {
                 className="btn btn-primary ml-2"
                 onClick={() => navigate(`/search/${searchInput}`)}
             >
-                {t('searchBar.search')}
+                <img
+                    src="/magnifying-glass.svg"
+                    className="h-6" 
+                    alt={t('searchBar.search')}
+                />
             </button>
             {
                 isInputFocused && suggestions.length > 0 &&
-                <div className="absolute top-full bg-base-100 shadow rounded-box w-80">
+                <div className="absolute top-full bg-base-100 shadow rounded-box">
                     <ul className="menu" onMouseDown={e => e.preventDefault()}>
                         {suggestionsRendered}
                     </ul>
