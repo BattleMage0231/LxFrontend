@@ -19,7 +19,7 @@ function renderHeader(entry: FREntry, t: TFunction, handleEdit: () => void) {
     return (
         <>
             <div>
-                <h2 className="float-left text-xl">{entry.Key} { typeId && <span>{`(${typeId})`}</span>}</h2>
+                <h2 className="float-left text-2xl">{entry.Key} { typeId && <span>{`(${typeId})`}</span>}</h2>
                 <button
                     className="btn btn-sm btn-secondary float-right"
                     onClick={handleEdit}
@@ -29,15 +29,15 @@ function renderHeader(entry: FREntry, t: TFunction, handleEdit: () => void) {
             </div>
             {
                 entry.Definition &&
-                <p>{entry.Definition}</p>
+                <p className="text-lg">{entry.Definition}</p>
             }
             {
                 entry.Examples.length > 0 &&
-                <ul className="list-disc pl-5">{examplesRendered}</ul>
+                <ul className="list-disc pl-5 text-lg">{examplesRendered}</ul>
             }
             {
                 entry.Synonyms.length > 0 &&
-                <p>{t('dictionary.entry.synonyms')}: {entry.Synonyms.join(", ")}</p>
+                <p className="text-lg">{t('dictionary.entry.synonyms')}: {entry.Synonyms.join(", ")}</p>
             }
         </>
     )
