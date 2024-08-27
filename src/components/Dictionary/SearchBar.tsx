@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useEntryService } from '../../services/apiService'
 import { useTranslation } from 'react-i18next'
@@ -8,21 +8,22 @@ export default function SearchBar() {
     const entryService = useEntryService()
     const { t } = useTranslation()
     const [searchInput, setSearchInput] = useState('')
-    const searchInputRef = useRef(searchInput)
+    const [debouncedInput, setDebouncedInput] = useState(searchInput)
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [suggestions, setSuggestions] = useState<string[]>([])
-    useEffect(() => { searchInputRef.current = searchInput }, [searchInput])
     useEffect(() => {
-        const interval = setInterval(() => {
-            if(searchInputRef.current) {
-                entryService.suggestSearch(searchInputRef.current)
-                    .then(res => setSuggestions(res ?? [])).catch(console.log)
-            } else {
-                setSuggestions([])
-            }
-        }, 2000)
-        return () => clearInterval(interval)
-    }, [entryService])
+        const handler = setTimeout(() => setDebouncedInput(searchInput), 300)
+        return () => clearTimeout(handler)
+    }, [searchInput])
+    useEffect(() => {
+        if(debouncedInput) {
+            entryService.suggestSearch(debouncedInput)
+                .then(res => setSuggestions(res ?? []))
+                .catch(console.log)
+        } else {
+            setSuggestions([])
+        }
+    }, [debouncedInput, entryService])
     const suggestionsRendered = suggestions.map(data => (
         <li key={data}>
             <a onClick={() => {
